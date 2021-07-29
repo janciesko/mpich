@@ -31,8 +31,7 @@ MPL_STATIC_INLINE_PREFIX MPIR_Request *MPIDIG_request_create(MPIR_Request_kind_t
      * atomic operation, so it might be more inefficient.  we should
      * use a new API to increase the ref_count value instead of the
      * for loop. */
-    for (i = 0; i < ref_count - 1; i++)
-        MPIR_Request_add_ref(req);
+    MPIR_Request_add_refs_unsafe(req, ref_count - 1);
 
     MPIDI_NM_am_request_init(req);
 #ifndef MPIDI_CH4_DIRECT_NETMOD

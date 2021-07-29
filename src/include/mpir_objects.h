@@ -271,6 +271,13 @@ typedef int Handle_ref_count;
         HANDLE_LOG_REFCOUNT_CHANGE(objptr_, (objptr_)->ref_count, "decr"); \
         HANDLE_CHECK_REFCOUNT(objptr_,(objptr_)->ref_count,"decr");     \
     } while (0)
+#define MPIR_Object_add_refs_always_unsafe(objptr_, ref_count_)                \
+    do {                                                                       \
+        int ref_count_id_;                                                     \
+        for (ref_count_id_ = 0; ref_count_id_ < ref_count_; ref_count_id_++) { \
+            MPIR_Object_add_ref_always(objptr_);                               \
+        }                                                                      \
+    } while(0)
 
 #elif MPICH_THREAD_REFCOUNT == MPICH_REFCOUNT__LOCKFREE
 
@@ -331,6 +338,14 @@ typedef MPL_atomic_int_t Handle_ref_count;
         HANDLE_CHECK_REFCOUNT(objptr_,new_ref_,"decr");                   \
     } while (0)
 #endif /* VCIEXP_FAST_COUNT_ONE_REF_RELEASE */
+
+#define MPIR_Object_add_refs_always_unsafe(objptr_, ref_count_)                \
+    do {                                                                       \
+        int ref_count_id_;                                                     \
+        for (ref_count_id_ = 0; ref_count_id_ < ref_count_; ref_count_id_++) { \
+            MPIR_Object_add_ref_always(objptr_);                               \
+        }                                                                      \
+    } while(0)
 #else /* MPICH_DEBUG_HANDLES */
 /* MPICH_THREAD_REFCOUNT == MPICH_REFCOUNT__LOCKFREE && !MPICH_DEBUG_HANDLES */
 #define MPIR_Object_add_ref_always(objptr_)     \
@@ -357,6 +372,13 @@ typedef MPL_atomic_int_t Handle_ref_count;
         }                                                                 \
     } while (0)
 #endif
+
+#define MPIR_Object_add_refs_always_unsafe(objptr_, ref_count_)                    \
+    do {                                                                           \
+        int cur_ref_count_ = MPL_atomic_relaxed_load_int(&((objptr_)->ref_count)); \
+        MPL_atomic_relaxed_store_int(&((objptr_)->ref_count), cur_ref_count_ + ref_count_);  \
+    } while(0)
+
 #endif /* MPICH_DEBUG_HANDLES */
 #else
 #error invalid value for MPICH_THREAD_REFCOUNT
@@ -409,6 +431,14 @@ typedef MPL_atomic_int_t Handle_ref_count;
                 }                                                       \
     } while (0)
 
+#define MPIR_Object_add_refs_unsafe(objptr_, ref_count_)                \
+    do {                                                                \
+        int handle_kind_ = HANDLE_GET_KIND((objptr_)->handle);          \
+        if (unlikely(handle_kind_ != HANDLE_KIND_BUILTIN)) {            \
+            MPIR_Object_add_refs_always_unsafe((objptr_), ref_count_);  \
+        }                                                               \
+    } while (0)
+
 #else /* !defined(MPICH_THREAD_SUPPRESS_PREDEFINED_REFCOUNTS) */
 
 /* the base case, where we just always manipulate the reference counts */
@@ -416,6 +446,8 @@ typedef MPL_atomic_int_t Handle_ref_count;
     MPIR_Object_add_ref_always((objptr_))
 #define MPIR_Object_release_ref(objptr_,inuse_ptr_)             \
     MPIR_Object_release_ref_always((objptr_),(inuse_ptr_))
+#define MPIR_Object_add_refs_unsafe(objptr_, ref_count_) \
+    MPIR_Object_add_refs_always_unsafe((objptr_), ref_count_)
 
 #endif
 

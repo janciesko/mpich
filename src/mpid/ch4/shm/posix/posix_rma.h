@@ -382,7 +382,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_POSIX_mpi_rput(const void *origin_addr,
         sreq = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__RMA, 0);
         MPIR_Assert(sreq);
 
-        MPIR_Request_add_ref(sreq);
+        MPIR_Request_add_ref_unsafe(sreq);
         MPID_Request_complete(sreq);
         *request = sreq;
     }
@@ -501,7 +501,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_POSIX_mpi_raccumulate(const void *origin_addr
     MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_Assert(sreq);
 
-    MPIR_Request_add_ref(sreq);
+    MPIR_Request_add_ref_unsafe(sreq);
     MPID_Request_complete(sreq);
     *request = sreq;
 
@@ -554,7 +554,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_POSIX_mpi_rget_accumulate(const void *origin_
     MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_Assert(sreq);
 
-    MPIR_Request_add_ref(sreq);
+    MPIR_Request_add_ref_unsafe(sreq);
     MPID_Request_complete(sreq);
     *request = sreq;
 
@@ -675,7 +675,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_POSIX_mpi_rget(void *origin_addr,
         sreq = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__RMA, 0);
         MPIR_Assert(sreq);
 
-        MPIR_Request_add_ref(sreq);
+        MPIR_Request_add_ref_unsafe(sreq);
         MPID_Request_complete(sreq);
         *request = sreq;
     }
