@@ -206,6 +206,22 @@ void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, con
     }
 }
 
+void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, const char *msg,
+                                const char *mutex_str, const char *function, const char *file,
+                                int line)
+{
+    int tid = -1;
+    int nolock = -1;
+#if defined(VCIEXP_LOCK_PTHREADS)
+    tid = l_MPIU_exp_data.local_tid;
+    nolock = g_MPIU_exp_data.no_lock;
+#endif
+    printf("[%2d:%2d] %s %s (id = %d) (%s() %s:%d, nolock = %d, mask = %d)\n",
+           g_MPIU_exp_data.print_rank, tid, msg, mutex_str, mutex_id, function, file, line, nolock,
+           l_MPIU_exp_data.vci_mask);
+    fflush(0);
+}
+
 int MPIX_Set_exp_info(int info_type, void *val1, int val2)
 {
     if (info_type == MPIX_INFO_TYPE_PRINT_RANK) {

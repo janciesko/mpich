@@ -148,6 +148,9 @@ extern __thread MPIU_exp_data_tls_t l_MPIU_exp_data;
 
 void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, const char *mutex_str,
                                 const char *function, const char *file, int line);
+void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, const char *msg,
+                                const char *mutex_str, const char *function, const char *file,
+                                int line);
 
 static inline
 void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
@@ -155,6 +158,11 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
                                      const char *file, int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, recursive ? "racquire" : "acquire",
+                                           mutex_str, function, file, line);
+        }
         if (recursive) {
             MPIDUI_THREAD_CS_ENTER_REC((*p_mutex));
         } else {
@@ -162,6 +170,9 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
         }
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-acquire", mutex_str, function,
+                                           file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
         }
     }
@@ -173,16 +184,29 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
                                              const char *function, const char *file, int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "acquire", mutex_str, function, file,
+                                           line);
+        }
         MPIDUI_THREAD_CS_ENTER((*p_mutex));
         *p_skip = 0;
     } else if (VCIEXP_LOCK_PTHREADS_COND_OR_FALSE((1 << mutex_id) & l_MPIU_exp_data.vci_mask)) {
         /* This VCI should be checked without lock. */
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-acquire", mutex_str,
+                                           function, file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
         }
         *p_skip = 0;
     } else {
         /* This VCI is not associated with it. */
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "skip-acquire", mutex_str, function,
+                                           file, line);
+        }
         *p_skip = 1;
     }
 }
@@ -193,9 +217,17 @@ void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
                                     int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "release", mutex_str, function, file,
+                                           line);
+        }
         MPIDUI_THREAD_CS_EXIT((*p_mutex));
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-release", mutex_str, function,
+                                           file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
         }
     }
@@ -207,9 +239,17 @@ void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
                                      int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "yield", mutex_str, function, file,
+                                           line);
+        }
         MPIDUI_THREAD_CS_YIELD((*p_mutex));
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            if (g_MPIU_exp_data.print_enabled)
+                MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-yield", mutex_str, function,
+                                           file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
         }
     }
