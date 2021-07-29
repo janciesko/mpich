@@ -36,8 +36,13 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_do_global_progress(void)
 /* inside per-vci progress */
 MPL_STATIC_INLINE_PREFIX void MPIDI_check_progress_made_idx(MPID_Progress_state * state, int idx)
 {
-    if (state->progress_counts[idx] != MPIDI_global.progress_counts[state->vci[idx]]) {
-        state->progress_counts[idx] = MPIDI_global.progress_counts[state->vci[idx]];
+#ifdef VCIEXP_AOS_PROGRESS_COUNTS
+    int progress_count = MPIDI_global.vci[state->vci[idx]].vci.progress_count;
+#else
+    int progress_count = MPIDI_global.progress_counts[state->vci[idx]];
+#endif
+    if (state->progress_counts[idx] != progress_count) {
+        state->progress_counts[idx] = progress_count;
         state->progress_made = 1;
     }
 }
@@ -47,8 +52,13 @@ MPL_STATIC_INLINE_PREFIX void MPIDI_check_progress_made_vci(MPID_Progress_state 
 {
     for (int i = 0; i < state->vci_count; i++) {
         if (vci == state->vci[i]) {
-            if (state->progress_counts[i] != MPIDI_global.progress_counts[state->vci[i]]) {
-                state->progress_counts[i] = MPIDI_global.progress_counts[state->vci[i]];
+#ifdef VCIEXP_AOS_PROGRESS_COUNTS
+            int progress_count = MPIDI_global.vci[state->vci[i]].vci.progress_count;
+#else
+            int progress_count = MPIDI_global.progress_counts[state->vci[i]];
+#endif
+            if (state->progress_counts[i] != progress_count) {
+                state->progress_counts[i] = progress_count;
                 state->progress_made = 1;
             }
             break;
@@ -203,7 +213,12 @@ MPL_STATIC_INLINE_PREFIX void MPIDI_progress_state_init_count(MPID_Progress_stat
 #endif
 #else
     for (int i = 0; i < MPIDI_global.n_vcis; i++) {
-        state->progress_counts[i] = MPIDI_global.progress_counts[i];
+#ifdef VCIEXP_AOS_PROGRESS_COUNTS
+        int progress_count = MPIDI_global.vci[i].vci.progress_count;
+#else
+        int progress_count = MPIDI_global.progress_counts[i];
+#endif
+        state->progress_counts[i] = progress_count;
     }
 #endif
 }

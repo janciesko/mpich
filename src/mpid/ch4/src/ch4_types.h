@@ -242,6 +242,9 @@ typedef union MPIDI_vci {
     struct {
         int attr;
         MPID_Thread_mutex_t lock;
+#ifdef VCIEXP_AOS_PROGRESS_COUNTS
+        int progress_count;
+#endif
     } vci;
     char pad[MPL_CACHELINE_SIZE];
 } MPIDI_vci_t;
@@ -282,7 +285,9 @@ typedef struct MPIDI_CH4_Global_t {
 
     int n_vcis;
     MPIDI_vci_t vci[MPIDI_CH4_MAX_VCIS];
+#ifndef VCIEXP_AOS_PROGRESS_COUNTS
     int progress_counts[MPIDI_CH4_MAX_VCIS];
+#endif
 
 #if defined(MPIDI_CH4_USE_WORK_QUEUES)
     /* TODO: move into MPIDI_vci to have per-vci workqueue */
