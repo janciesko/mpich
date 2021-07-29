@@ -117,7 +117,10 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_progress_test(MPID_Progress_state * state, in
     /* multiple vci */
     if (MPIDI_do_global_progress()) {
         for (int vci = 0; vci < MPIDI_global.n_vcis; vci++) {
-            MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
+            int skip = 0;
+            MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(MPIDI_VCI(vci).lock, vci, &skip);
+            if (skip)
+                continue;
             MPIDI_PROGRESS(vci);
             if (wait) {
                 MPIDI_check_progress_made_vci(state, vci);
@@ -158,11 +161,34 @@ MPL_STATIC_INLINE_PREFIX void MPIDI_progress_state_init(MPID_Progress_state * st
 {
     state->flag = MPIDI_PROGRESS_ALL;
     state->progress_made = 0;
+#if defined(VCIEXP_LOCK_PTHREADS)
+    if (g_MPIU_exp_data.no_lock) {
+        /* local-VCI progress */
+        int vci_idx = 1;
+        state->vci[0] = 0;
+        const uint64_t vci_mask = l_MPIU_exp_data.vci_mask;
+        for (int vci = 1; vci <= MPIDI_global.n_vcis; vci++) {
+            if (vci > 64)
+                break;
+            if ((((uint64_t)1) << (uint64_t)(vci - 1)) & vci_mask) {
+                state->vci[vci_idx++] = vci;
+            }
+        }
+        state->vci_count = vci_idx;
+    } else {
+        /* global progress */
+        for (int i = 0; i < MPIDI_global.n_vcis; i++) {
+            state->vci[i] = i;
+        }
+        state->vci_count = MPIDI_global.n_vcis;
+    }
+#else
     /* global progress by default */
     for (int i = 0; i < MPIDI_global.n_vcis; i++) {
         state->vci[i] = i;
     }
     state->vci_count = MPIDI_global.n_vcis;
+#endif
 }
 
 /* only wait functions need check progress_counts */

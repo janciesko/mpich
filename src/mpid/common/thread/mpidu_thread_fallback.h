@@ -235,6 +235,10 @@ M*/
 #define MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id)       /* NOOP */
 #define MPIDUI_THREAD_CS_ENTER_REC_VCI(mutex, mutex_id)   /* NOOP */
 #define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id)        /* NOOP */
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(mutex, mutex_id, p_skip)     \
+    do {                                                                \
+        *(p_skip) = 0;                                                  \
+    } while (0)
 #define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id)       /* NOOP */
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id)   /* NOOP */
 #endif
