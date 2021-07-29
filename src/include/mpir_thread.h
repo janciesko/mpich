@@ -131,7 +131,7 @@ extern MPIU_exp_data_t g_MPIU_exp_data;
 
 typedef struct {
     char dummy1[64];
-    int vci_mask;
+    uint64_t vci_mask;
 #if defined(VCIEXP_LOCK_PTHREADS)
     int local_tid;
 #endif
@@ -220,7 +220,7 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
         MPIDUI_Thread_abt_tls_t *p_tls =
             (MPIDUI_Thread_abt_tls_t *)MPL_thread_get_tls_ptr_and_self_fast(&owner_id);
         while (1) {
-            if (!((1 << mutex_id) & l_MPIU_exp_data.vci_mask)) {
+            if (!((((uint64_t)1) << (uint64_t)(mutex_id - 1)) & l_MPIU_exp_data.vci_mask)) {
                 /* Check if we should "migrate" this thread, not "offload". */
                 if (MPIDUI_Thread_cs_update_history_and_decide(p_tls, mutex_id)) {
                     /* Migration should happen. */
@@ -291,7 +291,7 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
         }
         MPIDUI_THREAD_CS_ENTER((*p_mutex));
         *p_skip = 0;
-    } else if ((1 << mutex_id) & l_MPIU_exp_data.vci_mask) {
+    } else if ((((uint64_t)1) << (uint64_t)(mutex_id - 1)) & l_MPIU_exp_data.vci_mask) {
 #if defined(VCIEXP_LOCK_ARGOBOTS)
         /* Since multiple ULTs can be associated with a single execution stream, we need to check
          * the owner. */
