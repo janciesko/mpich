@@ -499,6 +499,9 @@ typedef struct MPIR_Object_alloc_t {
                                  * pointer is ignored. Ref. mpir_request.h.
                                  * NOTE: it is `void *` because mutex type not defined yet.
                                  */
+#ifdef VCIEXP_PADDING_OBJ_ALLOC_T
+  char dummy[128];
+#endif
 } MPIR_Object_alloc_t;
 static inline void *MPIR_Handle_obj_alloc(MPIR_Object_alloc_t *);
 void *MPIR_Info_handle_obj_alloc(MPIR_Object_alloc_t *);
