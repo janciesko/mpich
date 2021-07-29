@@ -230,12 +230,10 @@ M*/
 
 /* VCI is only enabled with MPICH_THREAD_GRANULARITY__VCI */
 #if MPICH_THREAD_GRANULARITY == MPICH_THREAD_GRANULARITY__VCI
-#define MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_ENTER(mutex)
-#define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_EXIT(mutex)
-#define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_YIELD(mutex)
-#define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id) MPIDUI_THREAD_ASSERT_IN_CS(mutex)
+/* These macros are implemented in mpir_thread.h */
 #else
 #define MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id)       /* NOOP */
+#define MPIDUI_THREAD_CS_ENTER_REC_VCI(mutex, mutex_id)   /* NOOP */
 #define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id)        /* NOOP */
 #define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id)       /* NOOP */
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id)   /* NOOP */
