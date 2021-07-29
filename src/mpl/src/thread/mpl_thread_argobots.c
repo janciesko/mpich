@@ -71,4 +71,8 @@ void MPL_thread_create(MPL_thread_func_t func, void *data, MPL_thread_id_t * idp
     }
 }
 
+#ifndef ABTX_FAST_SELF_GET_TLS_PTR
+MPL_global_abt_info g_abt_info = { "", 0, "" };
+#endif
+
 #endif
