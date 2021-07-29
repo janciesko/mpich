@@ -146,6 +146,9 @@ extern __thread MPIU_exp_data_tls_t l_MPIU_exp_data;
 #define VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(...) 0
 #endif
 
+void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, const char *mutex_str,
+                                const char *function, const char *file, int line);
+
 static inline
 void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
                                      bool recursive, const char *mutex_str, const char *function,
@@ -156,6 +159,10 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
             MPIDUI_THREAD_CS_ENTER_REC((*p_mutex));
         } else {
             MPIDUI_THREAD_CS_ENTER((*p_mutex));
+        }
+    } else {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
         }
     }
 }
@@ -170,6 +177,9 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
         *p_skip = 0;
     } else if (VCIEXP_LOCK_PTHREADS_COND_OR_FALSE((1 << mutex_id) & l_MPIU_exp_data.vci_mask)) {
         /* This VCI should be checked without lock. */
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
+        }
         *p_skip = 0;
     } else {
         /* This VCI is not associated with it. */
@@ -184,6 +194,10 @@ void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         MPIDUI_THREAD_CS_EXIT((*p_mutex));
+    } else {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
+        }
     }
 }
 
@@ -194,6 +208,10 @@ void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         MPIDUI_THREAD_CS_YIELD((*p_mutex));
+    } else {
+        if (unlikely(g_MPIU_exp_data.debug_enabled)) {
+            MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
+        }
     }
 }
 
