@@ -26,6 +26,9 @@ typedef struct {
     ucp_worker_h worker;
     ucp_address_t *if_address;
     size_t addrname_len;
+#ifdef VCIEXP_PADDING_MPIDI_UCX_CONTEXT_T
+    char pad[64];
+#endif
 } MPIDI_UCX_context_t;
 
 typedef struct {
