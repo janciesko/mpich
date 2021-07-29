@@ -1,0 +1,24 @@
+################################################################################
+How to use this benchmark
+                                            Shintaro Iwasaki (siwasaki@anl.gov)
+################################################################################
+
+Scripts (make.sh and run*.sh) assume that MPICH is installed as follows.
+
+${MPICH_ROOT}/install_${DEVICE}_pth
+${MPICH_ROOT}/install_${DEVICE}_pthvci
+${MPICH_ROOT}/install_${DEVICE}_pthvciopt
+${MPICH_ROOT}/install_${DEVICE}_abt
+## Optional
+# ${MPICH_ROOT}/install_${DEVICE}_abt_${OPTNUM}
+
+The following satisfies the installation requirements.
+sh make.sh opt pth ${DEVICE} 1 $(pwd)/install_${DEVICE}_pth
+sh make.sh opt pthvci ${DEVICE} 1 $(pwd)/install_${DEVICE}_pthvci
+sh make.sh opt pthvciopt ${DEVICE} 1 $(pwd)/install_${DEVICE}_pthvciopt
+sh make.sh opt abt ${DEVICE} 1 $(pwd)/install_${DEVICE}_abt
+
+## If needed:
+# OPT_NUM=1 sh make.sh opt abt ${DEVICE} 1 $(pwd)/install_${DEVICE}_abt_1
+# OPT_NUM=2 sh make.sh opt abt ${DEVICE} 1 $(pwd)/install_${DEVICE}_abt_2
+# ...
