@@ -196,7 +196,11 @@ MPL_STATIC_INLINE_PREFIX void MPIDI_progress_state_init_count(MPID_Progress_stat
 {
     /* Note: ugly code to avoid warning -Wmaybe-uninitialized */
 #if MPIDI_CH4_MAX_VCIS == 1
+#ifdef VCIEXP_AOS_PROGRESS_COUNTS
+    state->progress_counts[0] = MPIDI_global.vci[0].vci.progress_count;
+#else
     state->progress_counts[0] = MPIDI_global.progress_counts[0];
+#endif
 #else
     for (int i = 0; i < MPIDI_global.n_vcis; i++) {
         state->progress_counts[i] = MPIDI_global.progress_counts[i];
