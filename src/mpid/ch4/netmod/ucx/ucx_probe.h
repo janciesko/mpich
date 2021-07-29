@@ -24,7 +24,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_improbe(int source,
     MPIR_Request *req = NULL;
 
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_RECVER, comm, source, comm->rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
 
     tag_mask = MPIDI_UCX_tag_mask(tag, source);
     ucp_tag = MPIDI_UCX_recv_tag(tag, source, comm->recvcontext_id + context_offset);
@@ -50,7 +50,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_improbe(int source,
     *message = req;
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
     return mpi_errno;
   fn_fail:
     goto fn_exit;
@@ -71,7 +71,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_iprobe(int source,
     ucp_tag_message_h message_h;
 
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_RECVER, comm, source, comm->rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
 
     tag_mask = MPIDI_UCX_tag_mask(tag, source);
     ucp_tag = MPIDI_UCX_recv_tag(tag, source, comm->recvcontext_id + context_offset);
@@ -92,7 +92,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_iprobe(int source,
         *flag = 0;
     }
 
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
 
     return mpi_errno;
 }

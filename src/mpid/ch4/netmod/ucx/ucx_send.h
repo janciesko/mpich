@@ -116,7 +116,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_isend_coll(const void *buf, MPI_Aint count
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_NM_ISEND_COLL);
     int vni_src = MPIDI_UCX_get_vni(SRC_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock, vni_src);
 
     switch (*errflag) {
         case MPIR_ERR_NONE:
@@ -131,7 +131,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_isend_coll(const void *buf, MPI_Aint count
     mpi_errno = MPIDI_UCX_send(buf, count, datatype, rank, tag, comm, context_offset,
                                addr, request, vni_src, vni_dst, 1, 0);
 
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock, vni_src);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDI_NM_ISEND_COLL);
 
     return mpi_errno;
@@ -148,10 +148,10 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_isend(const void *buf,
     int mpi_errno;
     int vni_src = MPIDI_UCX_get_vni(SRC_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock, vni_src);
     mpi_errno = MPIDI_UCX_send(buf, count, datatype, rank, tag, comm, context_offset,
                                addr, request, vni_src, vni_dst, 1, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock, vni_src);
     return mpi_errno;
 }
 
@@ -166,10 +166,10 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_issend(const void *buf,
     int mpi_errno;
     int vni_src = MPIDI_UCX_get_vni(SRC_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_SENDER, comm, comm->rank, rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_src).lock, vni_src);
     mpi_errno = MPIDI_UCX_send(buf, count, datatype, rank, tag, comm, context_offset,
                                addr, request, vni_src, vni_dst, 1, 1);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_src).lock, vni_src);
     return mpi_errno;
 }
 
@@ -177,9 +177,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_cancel_send(MPIR_Request * sreq)
 {
     if (!MPIR_Request_is_complete(sreq)) {
         int vci = MPIDI_Request_get_vci(sreq);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock);
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
         ucp_request_cancel(MPIDI_UCX_global.ctx[vci].worker, MPIDI_UCX_REQ(sreq).ucp_request);
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
     }
 
     return MPI_SUCCESS;

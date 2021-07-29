@@ -430,10 +430,10 @@ static inline MPIR_Request *MPIR_Request_create(MPIR_Request_kind_t kind)
 {
     MPIR_Request *req;
     MPID_THREAD_CS_ENTER(POBJ, MPIR_THREAD_POBJ_HANDLE_MUTEX);
-    MPID_THREAD_CS_ENTER(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[0].lock));
+    MPID_THREAD_CS_ENTER(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[0].lock), MPID_THREAD_REQUEST_MEM_LOCK_OFFSET + 0);
     req = MPIR_Request_create_from_pool(kind, 0);
     MPID_THREAD_CS_EXIT(POBJ, MPIR_THREAD_POBJ_HANDLE_MUTEX);
-    MPID_THREAD_CS_EXIT(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[0].lock));
+    MPID_THREAD_CS_EXIT(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[0].lock), MPID_THREAD_REQUEST_MEM_LOCK_OFFSET + 0);
     return req;
 }
 
@@ -472,7 +472,7 @@ static inline void MPIR_Request_free_with_safety(MPIR_Request * req, int need_sa
     MPIR_Request_release_ref(req, &inuse);
 
     if (need_safety) {
-        MPID_THREAD_CS_ENTER(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[pool].lock));
+        MPID_THREAD_CS_ENTER(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[pool].lock), MPID_THREAD_REQUEST_MEM_LOCK_OFFSET + pool);
     }
 #ifdef MPICH_DEBUG_MUTEX
     MPID_THREAD_ASSERT_IN_CS(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[pool].lock));
@@ -526,7 +526,7 @@ static inline void MPIR_Request_free_with_safety(MPIR_Request * req, int need_sa
         }
     }
     if (need_safety) {
-        MPID_THREAD_CS_EXIT(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[pool].lock));
+        MPID_THREAD_CS_EXIT(VCI, (*(MPID_Thread_mutex_t *) MPIR_Request_mem[pool].lock), MPID_THREAD_REQUEST_MEM_LOCK_OFFSET + pool);
     }
 }
 

@@ -100,10 +100,10 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_OFI_get_win_vni(MPIR_Win * win)
          * for recursive locking in more than one lock (currently limited
          * to one due to scalar TLS counter), this lock yielding
          * operation can be avoided since we are inside a finite loop. */\
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);     \
-        mpi_errno = MPIDI_OFI_retry_progress();                      \
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock);    \
-        MPIR_ERR_CHECK(mpi_errno);                               \
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_);  \
+        mpi_errno = MPIDI_OFI_retry_progress();                \
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock, vci_); \
+        MPIR_ERR_CHECK(mpi_errno);                             \
         _retry--;                                           \
     } while (_ret == -FI_EAGAIN);                           \
     } while (0)
@@ -112,32 +112,32 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_OFI_get_win_vni(MPIR_Win * win)
  * moved down to ofi-layer */
 #define MPIDI_OFI_VCI_PROGRESS(vci_)                                    \
     do {                                                                \
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock);                \
-        mpi_errno = MPIDI_NM_progress(vci_, 0);                        \
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);                 \
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock, vci_);          \
+        mpi_errno = MPIDI_NM_progress(vci_, 0);                         \
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_);           \
         MPIR_ERR_CHECK(mpi_errno);                                      \
         MPID_THREAD_CS_YIELD(GLOBAL, MPIR_THREAD_GLOBAL_ALLFUNC_MUTEX); \
     } while (0)
 
 #define MPIDI_OFI_VCI_PROGRESS_WHILE(vci_, cond)                            \
     do {                                                                    \
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock);                    \
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock, vci_);              \
         while (cond) {                                                      \
-            mpi_errno = MPIDI_NM_progress(vci_, 0);                        \
+            mpi_errno = MPIDI_NM_progress(vci_, 0);                         \
             if (mpi_errno) {                                                \
-                MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);             \
+                MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_);       \
                 MPIR_ERR_POP(mpi_errno);                                    \
             }                                                               \
             MPID_THREAD_CS_YIELD(GLOBAL, MPIR_THREAD_GLOBAL_ALLFUNC_MUTEX); \
         }                                                                   \
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);                     \
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_);               \
     } while (0)
 
 #define MPIDI_OFI_VCI_CALL(FUNC,vci_,STR)                   \
     do {                                                    \
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock);    \
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock, vci_); \
         ssize_t _ret = FUNC;                                \
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);     \
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_); \
         MPIDI_OFI_ERR(_ret<0,                               \
                               mpi_errno,                    \
                               MPI_ERR_OTHER,                \
@@ -154,9 +154,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_OFI_get_win_vni(MPIR_Win * win)
     ssize_t _ret;                                           \
     int _retry = MPIR_CVAR_CH4_OFI_MAX_EAGAIN_RETRY;        \
     do {                                                    \
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock);    \
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci_).lock, vci_); \
         _ret = FUNC;                                        \
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock);     \
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci_).lock, vci_); \
         if (likely(_ret==0)) break;                         \
         MPIDI_OFI_ERR(_ret!=-FI_EAGAIN,                     \
                               mpi_errno,                    \

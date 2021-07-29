@@ -24,7 +24,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_part_start(MPIR_Request * request, int is_lo
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDIG_PART_START);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDIG_PART_START);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     int status = MPIDIG_PART_REQ_INC_FETCH_STATUS(request);
 
@@ -46,7 +46,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_part_start(MPIR_Request * request, int is_lo
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_PART_START);
     return mpi_errno;
   fn_fail:
@@ -62,7 +62,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_post_pready(MPIR_Request * part_sreq, int is
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDIG_POST_PREADY);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDIG_POST_PREADY);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     /* Send data when all partitions are ready */
     if (MPIR_cc_get(MPIDIG_PART_REQUEST(part_sreq, u.send).ready_cntr) ==
@@ -76,7 +76,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_post_pready(MPIR_Request * part_sreq, int is
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_POST_PREADY);
     return mpi_errno;
   fn_fail:
@@ -133,7 +133,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_mpi_parrived(MPIR_Request * request, int par
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDIG_MPI_PARRIVED);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDIG_MPI_PARRIVED);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     /* Do not maintain per-partition completion. Arrived when full data transfer is done.
      * An inactive request returns TRUE (same for NULL req, handled at MPIR layer). */
@@ -148,7 +148,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDIG_mpi_parrived(MPIR_Request * request, int par
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_MPI_PARRIVED);
     return mpi_errno;
   fn_fail:

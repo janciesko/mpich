@@ -22,9 +22,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_isend(const void *buf,
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_ISEND);
 
 #ifdef MPIDI_CH4_USE_WORK_QUEUES
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     *(req) = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__SEND, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT((*req) == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     MPIR_Datatype_add_ref_if_not_builtin(datatype);
     MPIDI_workq_pt2pt_enqueue(ISEND, buf, NULL /*recv_buf */ , count, datatype,
@@ -72,9 +72,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_isend_coll(const void *buf,
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_ISEND_COLL);
 
 #ifdef MPIDI_CH4_USE_WORK_QUEUES
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     *(req) = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__SEND, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT((*req) == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     MPIR_Datatype_add_ref_if_not_builtin(datatype);
     MPIDI_workq_csend_enqueue(ICSEND, buf, count, datatype, rank, tag, comm,
@@ -122,9 +122,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_issend(const void *buf,
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_ISSEND);
 
 #ifdef MPIDI_CH4_USE_WORK_QUEUES
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     *(req) = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__SEND, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT((*req) == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     MPIR_Datatype_add_ref_if_not_builtin(datatype);
     MPIDI_workq_pt2pt_enqueue(SSEND, buf, NULL /*recv_buf */ , count, datatype,
@@ -322,9 +322,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_psend_init(MPIDI_ptype ptype,
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDI_PSEND_INIT);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_PSEND_INIT);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     sreq = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__PREQUEST_SEND, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT(sreq == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     *request = sreq;
 

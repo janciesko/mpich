@@ -435,9 +435,9 @@ int MPII_Genutil_sched_start(MPII_Genutil_sched_t * sched, MPIR_Comm * comm, MPI
     /* Enqueue schedule and activate progress hook if not already activated */
     reqp->u.nbc.coll.sched = (void *) sched;
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_TSP_QUEUE_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_TSP_QUEUE_MUTEX, MPIDIU_THREAD_TSP_QUEUE_MUTEX_ID);
     DL_APPEND(MPII_coll_queue.head, &(reqp->u.nbc.coll));
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_TSP_QUEUE_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_TSP_QUEUE_MUTEX, MPIDIU_THREAD_TSP_QUEUE_MUTEX_ID);
 
     MPIR_Progress_hook_activate(MPII_Genutil_progress_hook_id);
 

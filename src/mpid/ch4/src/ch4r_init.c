@@ -31,7 +31,7 @@ int MPIDIG_init_comm(MPIR_Comm * comm)
      * is turned on).
      * Thus we take a lock here to make sure the following operations are atomically done.
      * (transferring unexpected messages from a global queue to the newly created communicator) */
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
     MPIDI_global.comm_req_lists[comm_idx].comm[is_localcomm][subcomm_type] = comm;
     MPIDIG_COMM(comm, posted_list) = NULL;
     MPIDIG_COMM(comm, unexp_list) = NULL;
@@ -46,7 +46,7 @@ int MPIDIG_init_comm(MPIR_Comm * comm)
         }
         *uelist = NULL;
     }
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
 
     MPIDIG_COMM(comm, window_instance) = 0;
   fn_exit:
@@ -69,7 +69,7 @@ int MPIDIG_destroy_comm(MPIR_Comm * comm)
     MPIR_Assert(subcomm_type <= 3);
     MPIR_Assert(is_localcomm <= 1);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
     MPIR_Assert(MPIDI_global.comm_req_lists[comm_idx].comm[is_localcomm][subcomm_type] != NULL);
 
     if (MPIDI_global.comm_req_lists[comm_idx].comm[is_localcomm][subcomm_type]) {
@@ -81,7 +81,7 @@ int MPIDIG_destroy_comm(MPIR_Comm * comm)
                      unexp_list) == NULL);
     }
     MPIDI_global.comm_req_lists[comm_idx].comm[is_localcomm][subcomm_type] = NULL;
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
 
   fn_exit:
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_DESTROY_COMM);

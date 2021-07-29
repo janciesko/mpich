@@ -65,9 +65,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_IPC_mpi_imrecv(void *buf, MPI_Aint count, MPI
 #if MPICH_THREAD_GRANULARITY == MPICH_THREAD_GRANULARITY__VCI
     int vci = MPIDI_Request_get_vci(message);
 #endif
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
     mpi_errno = MPIDI_IPCI_try_matched_recv(buf, count, datatype, message, &recvd_flag);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
     MPIR_ERR_CHECK(mpi_errno);
 
     /* If not received, then fallback to POSIX matched receive */
@@ -90,7 +90,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_IPC_mpi_irecv(void *buf, MPI_Aint count, MPI_
     int mpi_errno = MPI_SUCCESS;
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDI_IPC_MPI_IRECV);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_IPC_MPI_IRECV);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     MPIR_Comm *root_comm = NULL;
     MPIR_Request *unexp_req = NULL;
@@ -116,9 +116,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_IPC_mpi_irecv(void *buf, MPI_Aint count, MPI_
         MPIR_Comm_release(root_comm);   /* -1 for removing from unexp_list */
 
         /* TODO: create unsafe version of imrecv to avoid extra locking */
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
         mpi_errno = MPIDI_IPC_mpi_imrecv(buf, count, datatype, *request);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
         MPIR_ERR_CHECK(mpi_errno);
     } else {
         /* No matching request found, post the receive request  */
@@ -139,7 +139,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_IPC_mpi_irecv(void *buf, MPI_Aint count, MPI_
 
   fn_exit:
     MPIDI_REQUEST_SET_LOCAL(*request, 1, NULL);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDI_IPC_MPI_IRECV);
     return mpi_errno;
   fn_fail:

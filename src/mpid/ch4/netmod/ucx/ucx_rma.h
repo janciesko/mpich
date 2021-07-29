@@ -227,18 +227,18 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_UCX_do_put(const void *origin_addr,
 
     if (origin_contig && target_contig) {
         int vni = MPIDI_UCX_get_win_vni(win);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock, vni);
         mpi_errno = MPIDI_UCX_contig_put((char *) origin_addr + origin_true_lb, origin_bytes,
                                          target_rank, target_disp, target_true_lb, win, addr,
                                          reqptr, vni);
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock, vni);
     } else if (target_contig) {
         int vni = MPIDI_UCX_get_win_vni(win);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock, vni);
         mpi_errno = MPIDI_UCX_noncontig_put(origin_addr, origin_count, origin_datatype, target_rank,
                                             target_bytes, target_disp, target_true_lb, win, addr,
                                             reqptr, vni);
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock, vni);
     } else {
         mpi_errno = MPIDIG_mpi_put(origin_addr, origin_count, origin_datatype, target_rank,
                                    target_disp, target_count, target_datatype, win);
@@ -289,11 +289,11 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_UCX_do_get(void *origin_addr,
 
     if (origin_contig && target_contig) {
         int vni = MPIDI_UCX_get_win_vni(win);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni).lock, vni);
         mpi_errno = MPIDI_UCX_contig_get((char *) origin_addr + origin_true_lb, origin_bytes,
                                          target_rank, target_disp, target_true_lb, win, addr,
                                          reqptr, vni);
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni).lock, vni);
     } else {
         mpi_errno = MPIDIG_mpi_get(origin_addr, origin_count, origin_datatype, target_rank,
                                    target_disp, target_count, target_datatype, win);

@@ -17,7 +17,7 @@ static int part_req_create(void *buf, int partitions, MPI_Aint count,
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDIG_PART_REQ_CREATE);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDIG_PART_REQ_CREATE);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     /* Set refcnt=1 for user-defined partitioned pattern; decrease at request_free. */
     req = MPIR_Request_create_from_pool(kind, 0);
@@ -45,7 +45,7 @@ static int part_req_create(void *buf, int partitions, MPI_Aint count,
     *req_ptr = req;
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_PART_REQ_CREATE);
     return mpi_errno;
   fn_fail:
@@ -66,7 +66,7 @@ int MPIDIG_mpi_psend_init(void *buf, int partitions, MPI_Aint count,
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDIG_MPI_PSEND_INIT);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDIG_MPI_PSEND_INIT);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
 
     /* Create and initialize device-layer partitioned request */
     mpi_errno = part_req_create((void *) buf, partitions, count, datatype, dest, tag, comm,
@@ -101,7 +101,7 @@ int MPIDIG_mpi_psend_init(void *buf, int partitions, MPI_Aint count,
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_FUNC_VERBOSE_EXIT(MPID_STATE_MPIDIG_MPI_PSEND_INIT);
     return mpi_errno;
   fn_fail:

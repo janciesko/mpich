@@ -27,7 +27,7 @@ MPL_STATIC_INLINE_PREFIX int anysource_irecv(void *buf, MPI_Aint count, MPI_Data
 #if MPICH_THREAD_GRANULARITY == MPICH_THREAD_GRANULARITY__VCI
     int shm_vci = MPIDI_Request_get_vci(*request);
 #endif
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(shm_vci).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(shm_vci).lock, shm_vci);
     need_unlock = 1;
     if (!MPIR_Request_is_complete(*request) && !MPIDIG_REQUEST_IN_PROGRESS(*request)) {
         MPIR_Request *nm_rreq = NULL;
@@ -50,7 +50,7 @@ MPL_STATIC_INLINE_PREFIX int anysource_irecv(void *buf, MPI_Aint count, MPI_Data
     }
   fn_exit:
     if (need_unlock) {
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(shm_vci).lock);
+        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(shm_vci).lock, shm_vci);
     }
     return mpi_errno;
   fn_fail:
@@ -103,9 +103,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_irecv(void *buf,
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_IRECV);
 
 #ifdef MPIDI_CH4_USE_WORK_QUEUES
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     *(req) = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__RECV, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT((*req) == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     MPIR_Datatype_add_ref_if_not_builtin(datatype);
     MPIDI_workq_pt2pt_enqueue(IRECV, NULL /*send_buf */ , buf, count, datatype,
@@ -151,9 +151,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_imrecv(void *buf,
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_IMRECV);
 
 #ifdef MPIDI_CH4_USE_WORK_QUEUES
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_Request *request = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__RECV, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT(request == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
     MPIR_Datatype_add_ref_if_not_builtin(datatype);
     MPIDI_workq_pt2pt_enqueue(IMRECV, NULL /*send_buf */ , buf, count, datatype,
@@ -194,9 +194,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_cancel_recv_safe(MPIR_Request * rreq)
      * usage it's often used inside a critical section (e.g. progress and anysource
      * receive). Therefore, we allow recursive lock usage here.
      */
-    MPID_THREAD_CS_ENTER_REC_VCI(MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_ENTER_REC_VCI(MPIDI_VCI(vci).lock, vci);
     mpi_errno = MPIDI_cancel_recv_unsafe(rreq);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
     MPIR_ERR_CHECK(mpi_errno);
 
   fn_exit:
@@ -233,9 +233,9 @@ MPL_STATIC_INLINE_PREFIX int MPID_Recv_init(void *buf,
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPID_RECV_INIT);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPID_RECV_INIT);
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
     rreq = MPIR_Request_create_from_pool(MPIR_REQUEST_KIND__PREQUEST_RECV, 0);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
     MPIR_ERR_CHKANDSTMT(rreq == NULL, mpi_errno, MPIX_ERR_NOREQ, goto fn_fail, "**nomemreq");
 
     *request = rreq;

@@ -181,7 +181,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_imrecv(void *buf,
     MPIR_Datatype *dt_ptr;
 
     int vci = MPIDI_Request_get_vci(message);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
     MPIDI_Datatype_get_info(count, datatype, dt_contig, data_sz, dt_ptr, dt_true_lb);
     if (dt_contig) {
         ucp_request =
@@ -215,7 +215,7 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_imrecv(void *buf,
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
     return mpi_errno;
   fn_fail:
     goto fn_exit;
@@ -233,12 +233,12 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_NM_mpi_irecv(void *buf,
     int mpi_errno;
 
     int vni_dst = MPIDI_UCX_get_vni(DST_VCI_FROM_RECVER, comm, rank, comm->rank, tag);
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
     mpi_errno =
         MPIDI_UCX_recv(buf, count, datatype, rank, tag, comm, context_offset, addr, vni_dst,
                        request);
     MPIDI_REQUEST_SET_LOCAL(*request, 0, partner);
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock);
+    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vni_dst).lock, vni_dst);
     return mpi_errno;
 }
 

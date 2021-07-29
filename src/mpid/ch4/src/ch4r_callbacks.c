@@ -377,7 +377,7 @@ int MPIDIG_send_target_msg_cb(int handler_id, void *am_hdr, void *data, MPI_Aint
 #ifndef MPIDI_CH4_DIRECT_NETMOD
         MPIDI_REQUEST(rreq, is_local) = is_local;
 #endif
-        MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+        MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
         if (root_comm) {
             MPIR_Comm_add_ref(root_comm);
             MPIDIG_enqueue_unexp(rreq, &MPIDIG_COMM(root_comm, unexp_list));
@@ -393,7 +393,7 @@ int MPIDIG_send_target_msg_cb(int handler_id, void *am_hdr, void *data, MPI_Aint
              * simply re-execute the per-communicator enqueue logic above. */
             root_comm_again = MPIDIG_context_id_to_comm(hdr->context_id);
             if (unlikely(root_comm_again != NULL)) {
-                MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+                MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
                 MPIDU_genq_private_pool_free_cell(MPIDI_global.unexp_pack_buf_pool,
                                                   MPIDIG_REQUEST(rreq, buffer));
                 MPIR_Request_free_unsafe(rreq);
@@ -404,7 +404,7 @@ int MPIDIG_send_target_msg_cb(int handler_id, void *am_hdr, void *data, MPI_Aint
             }
             MPIDIG_enqueue_unexp(rreq, MPIDIG_context_id_to_uelist(hdr->context_id));
         }
-        MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX);
+        MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX, MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID);
 
         /* at this point, we have created and enqueued the unexpected request. If the request is
          * ready for recv, we increase the seq_no and init the recv */

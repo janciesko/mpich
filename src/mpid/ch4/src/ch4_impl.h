@@ -867,9 +867,9 @@ MPL_STATIC_INLINE_PREFIX void MPIDIU_map_set_unsafe(void *in_map, uint64_t id, v
 MPL_STATIC_INLINE_PREFIX void MPIDIU_map_set(void *in_map, uint64_t id, void *val,
                                              MPL_memory_class class)
 {
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_UTIL_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_UTIL_MUTEX, MPIDIU_THREAD_UTIL_MUTEX_ID);
     MPIDIU_map_set_unsafe(in_map, id, val, class);
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_UTIL_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_UTIL_MUTEX, MPIDIU_THREAD_UTIL_MUTEX_ID);
 }
 
 MPL_STATIC_INLINE_PREFIX void MPIDIU_map_erase(void *in_map, uint64_t id)
@@ -907,7 +907,7 @@ MPL_STATIC_INLINE_PREFIX void *MPIDIU_map_update(void *in_map, uint64_t id, void
     MPIDIU_map_t *map;
     MPIDIU_map_entry_t *map_entry;
 
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_UTIL_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_UTIL_MUTEX, MPIDIU_THREAD_UTIL_MUTEX_ID);
     map = (MPIDIU_map_t *) in_map;
     HASH_FIND(hh, map->head, &id, sizeof(uint64_t), map_entry);
     if (map_entry == NULL) {
@@ -917,7 +917,7 @@ MPL_STATIC_INLINE_PREFIX void *MPIDIU_map_update(void *in_map, uint64_t id, void
         rc = map_entry->value;
         map_entry->value = new_val;
     }
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_UTIL_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_UTIL_MUTEX, MPIDIU_THREAD_UTIL_MUTEX_ID);
     return rc;
 }
 
