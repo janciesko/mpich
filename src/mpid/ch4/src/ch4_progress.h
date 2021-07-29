@@ -106,26 +106,26 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_progress_test(MPID_Progress_state * state, in
 
 #if MPIDI_CH4_MAX_VCIS == 1
     /* fast path for single vci */
-    MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(0).lock, 0);
+    MPIDUI_THREAD_CS_ENTER_VCI_NOPRINT(MPIDI_VCI(0).lock, 0);
     MPIDI_PROGRESS(0);
     if (wait) {
         MPIDI_check_progress_made_idx(state, 0);
     }
-    MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(0).lock, 0);
+    MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(MPIDI_VCI(0).lock, 0);
 
 #else
     /* multiple vci */
     if (MPIDI_do_global_progress()) {
         for (int vci = 0; vci < MPIDI_global.n_vcis; vci++) {
             int skip = 0;
-            MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(MPIDI_VCI(vci).lock, vci, &skip);
+            MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci, &skip);
             if (skip)
                 continue;
             MPIDI_PROGRESS(vci);
             if (wait) {
                 MPIDI_check_progress_made_vci(state, vci);
             }
-            MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
+            MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci);
             MPIR_ERR_CHECK(mpi_errno);
             if (wait && state->progress_made) {
                 break;
@@ -134,12 +134,12 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_progress_test(MPID_Progress_state * state, in
     } else {
         for (int i = 0; i < state->vci_count; i++) {
             int vci = state->vci[i];
-            MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
+            MPIDUI_THREAD_CS_ENTER_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci);
             MPIDI_PROGRESS(vci);
             if (wait) {
                 MPIDI_check_progress_made_idx(state, i);
             }
-            MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
+            MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci);
             MPIR_ERR_CHECK(mpi_errno);
             if (wait && state->progress_made) {
                 break;
@@ -220,9 +220,9 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_progress_test_vci(int vci)
     int mpi_errno = MPI_SUCCESS;
 
     if (MPIDI_do_global_progress()) {
-        MPID_THREAD_CS_EXIT(VCI, MPIDI_VCI(vci).lock, vci);
+        MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci);
         mpi_errno = MPID_Progress_test(NULL);
-        MPID_THREAD_CS_ENTER(VCI, MPIDI_VCI(vci).lock, vci);
+        MPIDUI_THREAD_CS_ENTER_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci);
     } else {
         mpi_errno = MPIDI_NM_progress(vci, 0);
         MPIR_ERR_CHECK(mpi_errno);

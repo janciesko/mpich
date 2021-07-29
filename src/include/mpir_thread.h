@@ -153,13 +153,13 @@ void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, con
                                 int line);
 
 static inline
-void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
+void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, int print_level,
                                      bool recursive, const char *mutex_str, const char *function,
                                      const char *file, int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, recursive ? "racquire" : "acquire",
                                            mutex_str, function, file, line);
         }
@@ -170,7 +170,7 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
         }
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-acquire", mutex_str, function,
                                            file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
@@ -180,12 +180,12 @@ void MPIDUI_Thread_cs_enter_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
 
 static inline
 void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
-                                             int *p_skip, const char *mutex_str,
+                                             int *p_skip, int print_level, const char *mutex_str,
                                              const char *function, const char *file, int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "acquire", mutex_str, function, file,
                                            line);
         }
@@ -194,7 +194,7 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
     } else if (VCIEXP_LOCK_PTHREADS_COND_OR_FALSE((1 << mutex_id) & l_MPIU_exp_data.vci_mask)) {
         /* This VCI should be checked without lock. */
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-acquire", mutex_str,
                                            function, file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
@@ -203,7 +203,7 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
     } else {
         /* This VCI is not associated with it. */
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "skip-acquire", mutex_str, function,
                                            file, line);
         }
@@ -212,20 +212,20 @@ void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int 
 }
 
 static inline
-void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
+void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, int print_level,
                                     const char *mutex_str, const char *function, const char *file,
                                     int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "release", mutex_str, function, file,
                                            line);
         }
         MPIDUI_THREAD_CS_EXIT((*p_mutex));
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-release", mutex_str, function,
                                            file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
@@ -234,20 +234,20 @@ void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
 }
 
 static inline
-void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id,
+void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id, int print_level,
                                      const char *mutex_str, const char *function, const char *file,
                                      int line)
 {
     if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "yield", mutex_str, function, file,
                                            line);
         }
         MPIDUI_THREAD_CS_YIELD((*p_mutex));
     } else {
         if (unlikely(g_MPIU_exp_data.debug_enabled)) {
-            if (g_MPIU_exp_data.print_enabled)
+            if (g_MPIU_exp_data.print_enabled >= print_level)
                 MPIDUI_Thread_cs_vci_print(p_mutex, mutex_id, "empty-yield", mutex_str, function,
                                            file, line);
             MPIDUI_Thread_cs_vci_check(p_mutex, mutex_id, mutex_str, function, file, line);
@@ -256,15 +256,23 @@ void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
 }
 
 #define MPIDUI_THREAD_CS_ENTER_VCI(_mutex, _mutex_id) \
-        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, false, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, false, 1, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_ENTER_REC_VCI(_mutex, _mutex_id) \
-        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, true, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, true, 1, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(_mutex, _mutex_id, _p_skip) \
-        MPIDUI_Thread_cs_enter_or_skip_vci_impl(&(_mutex), _mutex_id, _p_skip, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+        MPIDUI_Thread_cs_enter_or_skip_vci_impl(&(_mutex), _mutex_id, _p_skip, 1, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_EXIT_VCI(_mutex, _mutex_id) \
-        MPIDUI_Thread_cs_exit_vci_impl(&(_mutex), _mutex_id, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+        MPIDUI_Thread_cs_exit_vci_impl(&(_mutex), _mutex_id, 1, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+#define MPIDUI_THREAD_CS_ENTER_VCI_NOPRINT(_mutex, _mutex_id) \
+        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, false, 2, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+#define MPIDUI_THREAD_CS_ENTER_REC_VCI_NOPRINT(_mutex, _mutex_id) \
+        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, true, 2, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI_NOPRINT(_mutex, _mutex_id, _p_skip) \
+        MPIDUI_Thread_cs_enter_or_skip_vci_impl(&(_mutex), _mutex_id, _p_skip, 2, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+#define MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(_mutex, _mutex_id) \
+        MPIDUI_Thread_cs_exit_vci_impl(&(_mutex), _mutex_id, 2, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_YIELD_VCI(_mutex, _mutex_id) \
-        MPIDUI_Thread_cs_yield_vci_impl(&(_mutex), _mutex_id, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+        MPIDUI_Thread_cs_yield_vci_impl(&(_mutex), _mutex_id, 1, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(_mutex, _mutex_id) do {} while (0) /* no-op */
 
 #else /* !(defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)) */
@@ -277,6 +285,14 @@ void MPIDUI_Thread_cs_yield_vci_impl(MPIDU_Thread_mutex_t *p_mutex, int mutex_id
         *(p_skip) = 0;                                              \
     } while (0)
 #define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_EXIT(mutex)
+#define MPIDUI_THREAD_CS_ENTER_VCI_NOPRINT(mutex, mutex_id) MPIDUI_THREAD_CS_ENTER(mutex)
+#define MPIDUI_THREAD_CS_ENTER_REC_VCI_NOPRINT(mutex, mutex_id) MPIDUI_THREAD_CS_ENTER_REC(mutex)
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI_NOPRINT(mutex, mutex_id, p_skip) \
+    do {                                                            \
+        MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id);                \
+        *(p_skip) = 0;                                              \
+    } while (0)
+#define MPIDUI_THREAD_CS_EXIT_VCI_NOPRINT(mutex, mutex_id) MPIDUI_THREAD_CS_EXIT(mutex)
 #define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_YIELD(mutex)
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id) MPIDUI_THREAD_ASSERT_IN_CS(mutex)
 
