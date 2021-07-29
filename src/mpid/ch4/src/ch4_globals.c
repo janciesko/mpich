@@ -32,7 +32,7 @@ MPL_TLS int global_vci_poll_count = 0;
 #else
 /* We just need ensure global progress happen, so some race condition or even corruption
  * can be tolerated.  */
-int global_vci_poll_count = 0;
+__thread int global_vci_poll_count = 0;
 #endif
 
 /* PVAR */

@@ -20,7 +20,7 @@
 #ifdef MPL_TLS
 extern MPL_TLS int global_vci_poll_count;
 #else
-extern int global_vci_poll_count;
+extern __thread int global_vci_poll_count;
 #endif
 
 MPL_STATIC_INLINE_PREFIX int MPIDI_do_global_progress(void)
