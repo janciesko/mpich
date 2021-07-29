@@ -53,6 +53,9 @@ typedef struct {
     int progress_made;
     int vci_count;              /* number of vcis that need progress */
     int progress_counts[MPIDI_CH4_MAX_VCIS];
+#ifdef VCIEXP_PER_STATE_PROGRESS_COUNTER
+    int global_progress_counter;
+#endif
     uint8_t vci[MPIDI_CH4_MAX_VCIS];    /* list of vcis that need progress */
 } MPID_Progress_state;
 

@@ -125,7 +125,11 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_progress_test(MPID_Progress_state * state, in
 
 #else
     /* multiple vci */
+#ifdef VCIEXP_PER_STATE_PROGRESS_COUNTER
+    if (((++state->global_progress_counter) & MPIDI_CH4_PROG_POLL_MASK) == 0) {
+#else
     if (MPIDI_do_global_progress()) {
+#endif
         for (int vci = 0; vci < MPIDI_global.n_vcis; vci++) {
             int skip = 0;
             MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI_NOPRINT(MPIDI_VCI(vci).lock, vci, &skip);
@@ -198,6 +202,9 @@ MPL_STATIC_INLINE_PREFIX void MPIDI_progress_state_init(MPID_Progress_state * st
         state->vci[i] = i;
     }
     state->vci_count = MPIDI_global.n_vcis;
+#endif
+#ifdef VCIEXP_PER_STATE_PROGRESS_COUNTER
+    state->global_progress_counter = 0;
 #endif
 }
 
