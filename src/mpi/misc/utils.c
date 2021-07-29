@@ -139,14 +139,15 @@ int MPIR_Localcopy(const void *sendbuf, MPI_Aint sendcount, MPI_Datatype sendtyp
 #if defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)
 
 MPIU_exp_data_t g_MPIU_exp_data = {
-    "", /* dummy1 */
-    0,  /* debug_enabled */
-    -1, /* print_rank */
-    0,  /* print_enabled */
+    "",   /* dummy1 */
+    0,    /* debug_enabled */
+    -1,   /* print_rank */
+    0,    /* print_enabled */
+    0xff, /* prog_poll_mask */
 #if defined(VCIEXP_LOCK_PTHREADS)
-    0,  /* no_lock */
+    0,    /* no_lock */
 #endif
-    ""  /* dummy2 */
+    ""    /* dummy2 */
 };
 
 __thread MPIU_exp_data_tls_t l_MPIU_exp_data = {
@@ -323,6 +324,8 @@ int MPIX_Set_exp_info(int info_type, void *val1, int val2)
 #if defined(VCIEXP_LOCK_ARGOBOTS)
         update_vci_mask(vci_mask);
 #endif
+    } else if (info_type == MPIX_INFO_TYPE_PROGMASK) {
+        g_MPIU_exp_data.prog_poll_mask = val2;
     }
 }
 
