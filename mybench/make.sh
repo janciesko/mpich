@@ -8,10 +8,10 @@ fi
 
 ABT_PATH="$(pwd)/../argobots/install-fast"
 ABT_UNOPT_PATH="$(pwd)/../argobots_unopt/install-fast"
-MPICH_PTH_PATH=$(pwd)/../install_${DEVICE}_pth
-MPICH_PTHVCI_PATH=$(pwd)/../install_${DEVICE}_pthvci
-MPICH_PTHVCIOPT_PATH=$(pwd)/../install_${DEVICE}_pthvciopt
-MPICH_ABT_PATH=$(pwd)/../install_${DEVICE}_abt
+MPICH_PTH_PATH=$(pwd)/../install_opt_pth_${DEVICE}
+MPICH_PTHVCI_PATH=$(pwd)/../install_opt_pthvci_${DEVICE}
+MPICH_PTHVCIOPT_PATH=$(pwd)/../install_opt_pthvciopt_${DEVICE}
+MPICH_ABT_PATH=$(pwd)/../install_opt_abt_${DEVICE}
 
 echo "${MPICH_PTH_PATH}/bin/mpicc pt2pt_msgrate.c -lpthread -DUSE_PTHREADS -O3 -o ${DEVICE}_pth.out"
 ${MPICH_PTH_PATH}/bin/mpicc pt2pt_msgrate.c -lpthread -DUSE_PTHREADS -O3 -o ${DEVICE}_pth.out

@@ -6,6 +6,9 @@ DEVICE=$3
 NJOBS=$4
 PREFIX=$5
 
+unset F90
+unset F90FLAGS
+
 if [ x"$DEVICE" = x ]; then
     echo "Usage: make.sh OPT THREAD DEVICE (NJOBS) (PREFIX)"
     echo ""
