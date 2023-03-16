@@ -97,6 +97,8 @@ if  [ ! -f "argobots/install/lib/libabt.so" ]; then
     cd ../
 fi
 
+exit 1
+
 if  [ ! -f "argobots_unopt/install/lib/libabt.so" ]; then
     echo "## Compile Argobots"
     date
@@ -187,7 +189,7 @@ echo "## Configure MPICH"
 echo "./configure --prefix=\"${PREFIX}\" ${config_opts} CFLAGS=\"$cflags\""
 date
 rm -f Makefile
-./configure --prefix="${PREFIX}" ${config_opts} CFLAGS="$cflags"
+./configure --prefix="${PREFIX}" ${config_opts} CFLAGS="$cflags" --with-hwloc=/g/g92/ciesko1/RAndD/VCI/hwloc-2.9.0/install
 
 echo "## Compile MPICH"
 date
