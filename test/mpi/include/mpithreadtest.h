@@ -44,6 +44,14 @@
 #define MTEST_THREAD_LOCK_TYPE pthread_mutex_t
 #define MTEST_THREAD_RETVAL_IGN NULL
 
+#elif THREAD_PACKAGE_NAME == THREAD_PACKAGE_QTHREADS
+#include <qthread.h>
+
+#define MTEST_THREAD_RETURN_TYPE aligned_t
+#define MTEST_THREAD_HANDLE ABT_thread
+#define MTEST_THREAD_LOCK_TYPE ABT_mutex
+#define MTEST_THREAD_RETVAL_IGN
+
 #elif THREAD_PACKAGE_NAME == THREAD_PACKAGE_ARGOBOTS
 #include <abt.h>
 
