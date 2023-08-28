@@ -411,4 +411,68 @@ __thread MPIU_exp_data_tls_t l_MPIU_exp_data = {
     ""  /* dummy2 */
 };
 
+void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, const char *mutex_str,
+                                const char *function, const char *file, int line)
+{
+    if (mutex_id <= 0) {
+        /* It's okay. */
+        return;
+    } else {
+        /* Check the mask. */
+        if (mutex_id > MPIDI_global.n_vcis) {
+            int tid = -1;
+#if defined(VCIEXP_LOCK_PTHREADS)
+            tid = l_MPIU_exp_data.local_tid;
+#endif
+            printf("[%2d:%2d] invalid mutex_id: %d (%s in %s() %s:%d)\n",
+                   g_MPIU_exp_data.print_rank, tid, mutex_id, mutex_str, function, file, line);
+            fflush(0);
+            MPIR_Assert(0);
+        }
+        if ((1 << mutex_id) & l_MPIU_exp_data.vci_mask) {
+            /* It's okay, but check a lock value just in case. */
+            MPIDU_Thread_mutex_t *p_vci_lock = &MPIDI_global.vci[mutex_id].vci.lock;
+            if (p_mutex != p_vci_lock) {
+                int tid = -1;
+#if defined(VCIEXP_LOCK_PTHREADS)
+                tid = l_MPIU_exp_data.local_tid;
+#endif
+                printf("[%2d:%2d] invalid mutex_id: %d, %p vs %p (%s in %s() %s:%d)\n",
+                       g_MPIU_exp_data.print_rank, tid, mutex_id, (void *) p_mutex,
+                       (void *) p_vci_lock, mutex_str, function, file, line);
+                fflush(0);
+                MPIR_Assert(0);
+            }
+            return;
+        } else {
+            /* Not okay. Error. */
+            int tid = -1;
+#if defined(VCIEXP_LOCK_PTHREADS)
+            tid = l_MPIU_exp_data.local_tid;
+#endif
+            printf("[%2d:%2d] invalid mutex_id: %d (mask: %d, %s in %s() %s:%d)\n",
+                   g_MPIU_exp_data.print_rank, tid, mutex_id, l_MPIU_exp_data.vci_mask,
+                   mutex_str, function, file, line);
+            fflush(0);
+            MPIR_Assert(0);
+        }
+    }
+}
+
+void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, const char *msg,
+                                const char *mutex_str, const char *function, const char *file,
+                                int line)
+{
+    int tid = -1;
+    int nolock = -1;
+#if defined(VCIEXP_LOCK_PTHREADS)
+    tid = l_MPIU_exp_data.local_tid;
+    nolock = g_MPIU_exp_data.no_lock;
+#endif
+    printf("[%2d:%2d] %s %s (id = %d) (%s() %s:%d, nolock = %d, mask = %d)\n",
+           g_MPIU_exp_data.print_rank, tid, msg, mutex_str, mutex_id, function, file, line, nolock,
+           l_MPIU_exp_data.vci_mask);
+    fflush(0);
+}
+
 #endif /* defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS) */
