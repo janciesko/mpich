@@ -247,9 +247,9 @@ int MPIR_Err_return_comm(MPIR_Comm * comm_ptr, const char fcname[], int errcode)
                      comm_ptr, fcname, errcode));
 
     if (comm_ptr) {
-        MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+        MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
         errhandler = comm_ptr->errhandler;
-        MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+        MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     }
 
     if (errhandler == NULL) {
@@ -282,13 +282,13 @@ int MPIR_Err_return_comm(MPIR_Comm * comm_ptr, const char fcname[], int errcode)
     /* comm_ptr may have changed.  Keep this locked as long as we are using
      * the errhandler to prevent it from disappearing out from under us.
      */
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     errhandler = comm_ptr->errhandler;
 
     /* --BEGIN ERROR HANDLING-- */
     if (errhandler == NULL || errhandler->handle == MPI_ERRORS_ARE_FATAL ||
         errhandler->handle == MPI_ERRORS_ABORT) {
-        MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+        MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
         /* Calls MPID_Abort */
         MPIR_Handle_fatal_error(comm_ptr, fcname, errcode);
         /* never get here */
@@ -335,7 +335,7 @@ int MPIR_Err_return_comm(MPIR_Comm * comm_ptr, const char fcname[], int errcode)
 
     }
 
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return errcode;
 }
 

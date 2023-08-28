@@ -84,6 +84,53 @@ extern MPID_Thread_mutex_t MPIR_THREAD_VCI_HANDLE_MUTEX;
 extern MPID_Thread_mutex_t MPIR_THREAD_VCI_CTX_MUTEX;
 extern MPID_Thread_mutex_t MPIR_THREAD_VCI_PMI_MUTEX;
 extern MPID_Thread_mutex_t MPIR_THREAD_VCI_BSEND_MUTEX;
+
+#define MPIDIU_THREAD_GLOBAL_OFFSET           (-1000)
+#define MPIDIU_THREAD_PROGRESS_MUTEX_ID       (MPIDIU_THREAD_GLOBAL_OFFSET + 0)
+#define MPIDIU_THREAD_UTIL_MUTEX_ID           (MPIDIU_THREAD_GLOBAL_OFFSET + 1)
+#define MPIDIU_THREAD_MPIDIG_GLOBAL_MUTEX_ID  (MPIDIU_THREAD_GLOBAL_OFFSET + 2)
+#define MPIDIU_THREAD_SCHED_LIST_MUTEX_ID     (MPIDIU_THREAD_GLOBAL_OFFSET + 3)
+#define MPIDIU_THREAD_TSP_QUEUE_MUTEX_ID      (MPIDIU_THREAD_GLOBAL_OFFSET + 4)
+#define MPIDIU_THREAD_HCOLL_MUTEX_ID          (MPIDIU_THREAD_GLOBAL_OFFSET + 5)
+#define MPIDIU_THREAD_DYNPROC_MUTEX_ID        (MPIDIU_THREAD_GLOBAL_OFFSET + 6)
+#define MPIDIU_THREAD_ALLOC_MEM_MUTEX_ID      (MPIDIU_THREAD_GLOBAL_OFFSET + 7)
+
+#define MPID_MUTEX_DBG_LOCK_ID (-2000)
+#define MPID_OFI_MR_KEY_ALLOCATOR_LOCK_ID (-1999)
+
+#define MPID_THREAD_REQUEST_MEM_LOCK_OFFSET 0
+
+#define MPIR_THREAD_VCI_HANDLE_MUTEX_ID (-4000)
+#define MPIR_THREAD_VCI_CTX_MUTEX_ID    (-3999)
+#define MPIR_THREAD_VCI_PMI_MUTEX_ID    (-3998)
+#define MPIR_THREAD_VCI_BSEND_MUTEX_ID  (-3997)
+#define MPIR_THREAD_ERRHANDLER_MUTEX_ID (-3996)
+#define MPIR_THREAD_COMM_MUTEX_ID       (-3995)
+#if defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)
+
+typedef struct {
+    char dummy1[64];
+    int debug_enabled;
+    int print_rank;
+    int print_enabled;          /* 0: disabled, 1:lightly, 2: verbose, 3: very verbose */
+#if defined(VCIEXP_LOCK_PTHREADS)
+    int no_lock;
+#endif
+    char dummy2[64];
+} MPIU_exp_data_t;
+extern MPIU_exp_data_t g_MPIU_exp_data;
+
+typedef struct {
+    char dummy1[64];
+    int vci_mask;
+#if defined(VCIEXP_LOCK_PTHREADS)
+    int local_tid;
+#endif
+    char dummy2[64];
+} MPIU_exp_data_tls_t;
+extern __thread MPIU_exp_data_tls_t l_MPIU_exp_data;
+
+#endif /* defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS) */
 #endif /* MPICH_THREAD_GRANULARITY */
 #endif /* MPICH_IS_THREADED */
 

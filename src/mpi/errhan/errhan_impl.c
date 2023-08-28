@@ -73,7 +73,7 @@ int MPIR_Session_create_errhandler_impl(MPI_Session_errhandler_function * sessio
    returning NULL for errhandler_ptr means the default handler, MPI_ERRORS_ARE_FATAL is used */
 int MPIR_Comm_get_errhandler_impl(MPIR_Comm * comm_ptr, MPI_Errhandler * errhandler)
 {
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     if (comm_ptr->errhandler) {
         *errhandler = comm_ptr->errhandler->handle;
         MPIR_Errhandler_add_ref(comm_ptr->errhandler);
@@ -81,14 +81,14 @@ int MPIR_Comm_get_errhandler_impl(MPIR_Comm * comm_ptr, MPI_Errhandler * errhand
         /* Use the default */
         *errhandler = MPI_ERRORS_ARE_FATAL;
     }
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     return MPI_SUCCESS;
 }
 
 int MPIR_Win_get_errhandler_impl(MPIR_Win * win_ptr, MPI_Errhandler * errhandler)
 {
-    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     if (win_ptr->errhandler) {
         *errhandler = win_ptr->errhandler->handle;
@@ -98,7 +98,7 @@ int MPIR_Win_get_errhandler_impl(MPIR_Win * win_ptr, MPI_Errhandler * errhandler
         *errhandler = MPI_ERRORS_ARE_FATAL;
     }
 
-    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return MPI_SUCCESS;
 }
 
@@ -117,7 +117,7 @@ int MPIR_Session_get_errhandler_impl(MPIR_Session * session_ptr, MPI_Errhandler 
 
 int MPIR_Comm_set_errhandler_impl(MPIR_Comm * comm_ptr, MPIR_Errhandler * errhandler_ptr)
 {
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     /* We don't bother with the case where the errhandler is NULL;
      * in this case, the error handler was the original, MPI_ERRORS_ARE_FATAL,
@@ -129,13 +129,13 @@ int MPIR_Comm_set_errhandler_impl(MPIR_Comm * comm_ptr, MPIR_Errhandler * errhan
     MPIR_Errhandler_add_ref(errhandler_ptr);
     comm_ptr->errhandler = errhandler_ptr;
 
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return MPI_SUCCESS;
 }
 
 int MPIR_Win_set_errhandler_impl(MPIR_Win * win_ptr, MPIR_Errhandler * errhandler_ptr)
 {
-    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     /* We don't bother with the case where the errhandler is NULL;
      * in this case, the error handler was the original, MPI_ERRORS_ARE_FATAL,
@@ -147,7 +147,7 @@ int MPIR_Win_set_errhandler_impl(MPIR_Win * win_ptr, MPIR_Errhandler * errhandle
     MPIR_Errhandler_add_ref(errhandler_ptr);
     win_ptr->errhandler = errhandler_ptr;
 
-    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return MPI_SUCCESS;
 }
 
@@ -251,11 +251,11 @@ int MPIR_Comm_call_errhandler_impl(MPIR_Comm * comm_ptr, int errorcode)
 {
     int mpi_errno = MPI_SUCCESS;
 
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     mpi_errno = call_errhandler(comm_ptr, comm_ptr->errhandler, errorcode, comm_ptr->handle);
 
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return mpi_errno;
 }
 
@@ -263,11 +263,11 @@ int MPIR_Win_call_errhandler_impl(MPIR_Win * win_ptr, int errorcode)
 {
     int mpi_errno = MPI_SUCCESS;
 
-    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     mpi_errno = call_errhandler(win_ptr->comm_ptr, win_ptr->errhandler, errorcode, win_ptr->handle);
 
-    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, win_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     return mpi_errno;
 }
 

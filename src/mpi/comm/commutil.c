@@ -982,12 +982,12 @@ int MPII_Comm_copy(MPIR_Comm * comm_ptr, int size, MPIR_Info * info, MPIR_Comm *
     }
 
     /* Inherit the error handler (if any) */
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     newcomm_ptr->errhandler = comm_ptr->errhandler;
     if (comm_ptr->errhandler) {
         MPIR_Errhandler_add_ref(comm_ptr->errhandler);
     }
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     if (info) {
         MPII_Comm_set_hints(newcomm_ptr, info, true);
@@ -1052,12 +1052,12 @@ int MPII_Comm_copy_data(MPIR_Comm * comm_ptr, MPIR_Info * info, MPIR_Comm ** out
     newcomm_ptr->is_low_group = comm_ptr->is_low_group; /* only relevant for intercomms */
 
     /* Inherit the error handler (if any) */
-    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
     newcomm_ptr->errhandler = comm_ptr->errhandler;
     if (comm_ptr->errhandler) {
         MPIR_Errhandler_add_ref(comm_ptr->errhandler);
     }
-    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm_ptr->mutex, MPIR_THREAD_ERRHANDLER_MUTEX_ID);
 
     if (info) {
         MPII_Comm_set_hints(newcomm_ptr, info, true);
@@ -1343,18 +1343,18 @@ int MPII_Comm_is_node_balanced(MPIR_Comm * comm, int *num_nodes, bool * node_bal
 
 int MPIR_Comm_save_inactive_request(MPIR_Comm * comm, MPIR_Request * request)
 {
-    MPID_THREAD_CS_ENTER(VCI, comm->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
     HASH_ADD_INT(comm->persistent_requests, handle, request, MPL_MEM_COMM);
-    MPID_THREAD_CS_EXIT(VCI, comm->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
 
     return MPI_SUCCESS;
 }
 
 int MPIR_Comm_delete_inactive_request(MPIR_Comm * comm, MPIR_Request * request)
 {
-    MPID_THREAD_CS_ENTER(VCI, comm->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
     HASH_DEL(comm->persistent_requests, request);
-    MPID_THREAD_CS_EXIT(VCI, comm->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
 
     return MPI_SUCCESS;
 }
@@ -1362,7 +1362,7 @@ int MPIR_Comm_delete_inactive_request(MPIR_Comm * comm, MPIR_Request * request)
 int MPIR_Comm_free_inactive_requests(MPIR_Comm * comm)
 {
     MPIR_Request *request, *tmp;
-    MPID_THREAD_CS_ENTER(VCI, comm->mutex);
+    MPID_THREAD_CS_ENTER(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
     HASH_ITER(hh, comm->persistent_requests, request, tmp) {
         if (!MPIR_Request_is_active(request)) {
             MPL_internal_error_printf
@@ -1371,7 +1371,7 @@ int MPIR_Comm_free_inactive_requests(MPIR_Comm * comm)
             MPIR_Request_free_impl(request);
         }
     }
-    MPID_THREAD_CS_EXIT(VCI, comm->mutex);
+    MPID_THREAD_CS_EXIT(VCI, comm->mutex, MPIR_THREAD_COMM_MUTEX_ID);
 
     return MPI_SUCCESS;
 }

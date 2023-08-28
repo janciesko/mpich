@@ -123,7 +123,7 @@ int MPIDI_Self_isend(const void *buf, MPI_Aint count, MPI_Datatype datatype, int
     MPIR_Request *sreq = NULL;
     MPIR_Request *rreq = NULL;
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     DEQUEUE_SELF_RECV(rreq, tag, comm->context_id);
     if (rreq) {
@@ -143,7 +143,7 @@ int MPIDI_Self_isend(const void *buf, MPI_Aint count, MPI_Datatype datatype, int
     }
 
     *request = sreq;
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }
@@ -154,7 +154,7 @@ int MPIDI_Self_irecv(void *buf, MPI_Aint count, MPI_Datatype datatype, int rank,
     MPIR_Request *sreq = NULL;
     MPIR_Request *rreq = NULL;
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     rreq = MPIR_Request_create(MPIR_REQUEST_KIND__RECV);
 
@@ -177,7 +177,7 @@ int MPIDI_Self_irecv(void *buf, MPI_Aint count, MPI_Datatype datatype, int rank,
     }
 
     *request = rreq;
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }
@@ -186,7 +186,7 @@ int MPIDI_Self_iprobe(int rank, int tag, MPIR_Comm * comm, int attr, int *flag, 
 {
     MPIR_Request *sreq = NULL;
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     FIND_SELF_SEND(sreq, tag, comm->context_id);
     if (sreq) {
@@ -203,7 +203,7 @@ int MPIDI_Self_iprobe(int rank, int tag, MPIR_Comm * comm, int attr, int *flag, 
     } else {
         *flag = FALSE;
     }
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }
@@ -213,7 +213,7 @@ int MPIDI_Self_improbe(int rank, int tag, MPIR_Comm * comm, int attr,
 {
     MPIR_Request *sreq = NULL;
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     DEQUEUE_SELF_SEND(sreq, tag, comm->context_id);
     if (sreq) {
@@ -236,7 +236,7 @@ int MPIDI_Self_improbe(int rank, int tag, MPIR_Comm * comm, int attr,
     } else {
         *flag = FALSE;
     }
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }
@@ -245,7 +245,7 @@ int MPIDI_Self_imrecv(char *buf, MPI_Aint count, MPI_Datatype datatype,
                       MPIR_Request * message, MPIR_Request ** request)
 {
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     MPIR_Request *sreq = message->dev.ch4.self.match_req;
     MPIR_Request *rreq = message;
@@ -260,7 +260,7 @@ int MPIDI_Self_imrecv(char *buf, MPI_Aint count, MPI_Datatype datatype,
     MPIR_cc_set(&rreq->cc, 0);
 
     *request = rreq;
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }
@@ -280,7 +280,7 @@ int MPIDI_Self_imrecv(char *buf, MPI_Aint count, MPI_Datatype datatype,
 int MPIDI_Self_cancel(MPIR_Request * request)
 {
     MPIR_FUNC_ENTER;
-    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_ENTER(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
 
     if (!MPIR_Request_is_complete(request) && !MPIR_STATUS_GET_CANCEL_BIT(request->status)) {
         int found = 0;
@@ -301,7 +301,7 @@ int MPIDI_Self_cancel(MPIR_Request * request)
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX);
+    MPID_THREAD_CS_EXIT(VCI, MPIDIU_THREAD_SELF_MUTEX, MPIDIU_THREAD_SELF_MUTEX_ID);
     MPIR_FUNC_EXIT;
     return MPI_SUCCESS;
 }

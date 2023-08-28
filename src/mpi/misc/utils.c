@@ -388,3 +388,27 @@ int MPIR_Localcopy_gpu(const void *sendbuf, MPI_Aint sendcount, MPI_Datatype sen
   fn_fail:
     goto fn_exit;
 }
+
+#if defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)
+
+MPIU_exp_data_t g_MPIU_exp_data = {
+    "", /* dummy1 */
+    0,  /* debug_enabled */
+    -1, /* print_rank */
+    0,  /* print_enabled */
+#if defined(VCIEXP_LOCK_PTHREADS)
+    0,  /* no_lock */
+#endif
+    ""  /* dummy2 */
+};
+
+__thread MPIU_exp_data_tls_t l_MPIU_exp_data = {
+    "", /* dummy1 */
+    0,  /* vci_mask */
+#if defined(VCIEXP_LOCK_PTHREADS)
+    -1, /* local_tid */
+#endif
+    ""  /* dummy2 */
+};
+
+#endif /* defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS) */

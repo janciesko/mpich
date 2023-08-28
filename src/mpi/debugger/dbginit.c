@@ -361,7 +361,7 @@ void MPII_Debugq_remember(MPIR_Request * req, int rank, int tag, int context_id,
         return;
     }
 
-    MPID_THREAD_CS_ENTER(VCI, lock);
+    MPID_THREAD_CS_ENTER(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
     if (pool) {
         p = pool;
         pool = p->next;
@@ -396,7 +396,7 @@ void MPII_Debugq_remember(MPIR_Request * req, int rank, int tag, int context_id,
     }
 
   fn_exit:
-    MPID_THREAD_CS_EXIT(VCI, lock);
+    MPID_THREAD_CS_EXIT(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
 #endif /* HAVE_DEBUGGER_SUPPORT */
 }
 
@@ -405,7 +405,7 @@ void MPII_Debugq_forget(MPIR_Request * req, MPIR_Debugq ** queue)
 #if defined HAVE_DEBUGGER_SUPPORT
     MPIR_Debugq *p = NULL;
 
-    MPID_THREAD_CS_ENTER(VCI, lock);
+    MPID_THREAD_CS_ENTER(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
     if (queue == &MPIR_Sendq_head) {
         p = req->send;
     } else if (queue == &MPIR_Recvq_head) {
@@ -415,14 +415,14 @@ void MPII_Debugq_forget(MPIR_Request * req, MPIR_Debugq ** queue)
     }
     if (!p) {
         /* Just ignore it */
-        MPID_THREAD_CS_EXIT(VCI, lock);
+        MPID_THREAD_CS_EXIT(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
         return;
     }
     DL_DELETE(*queue, p);
     /* Return this element to the pool */
     p->next = pool;
     pool = p;
-    MPID_THREAD_CS_EXIT(VCI, lock);
+    MPID_THREAD_CS_EXIT(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
 #endif /* HAVE_DEBUGGER_SUPPORT */
 }
 
@@ -482,7 +482,7 @@ void MPII_CommL_remember(MPIR_Comm * comm_ptr)
     MPL_DBG_MSG_P(MPIR_DBG_COMM, VERBOSE, "Adding communicator %p to remember list", comm_ptr);
     MPL_DBG_MSG_P(MPIR_DBG_COMM, VERBOSE,
                   "Remember list structure address is %p", &MPIR_All_communicators);
-    MPID_THREAD_CS_ENTER(VCI, lock);
+    MPID_THREAD_CS_ENTER(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
     if (comm_ptr == MPIR_All_communicators.head) {
         MPL_internal_error_printf("Internal error: communicator is already on free list\n");
         return;
@@ -492,7 +492,7 @@ void MPII_CommL_remember(MPIR_Comm * comm_ptr)
     MPIR_All_communicators.sequence_number++;
     MPL_DBG_MSG_P(MPIR_DBG_COMM, VERBOSE, "main head is %p", MPIR_All_communicators.head);
 
-    MPID_THREAD_CS_EXIT(VCI, lock);
+    MPID_THREAD_CS_EXIT(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
 }
 
 void MPII_CommL_forget(MPIR_Comm * comm_ptr)
@@ -501,7 +501,7 @@ void MPII_CommL_forget(MPIR_Comm * comm_ptr)
 
     MPL_DBG_MSG_P(MPIR_DBG_COMM, VERBOSE,
                   "Forgetting communicator %p from remember list", comm_ptr);
-    MPID_THREAD_CS_ENTER(VCI, lock);
+    MPID_THREAD_CS_ENTER(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
     p = MPIR_All_communicators.head;
     prev = 0;
     while (p) {
@@ -522,7 +522,7 @@ void MPII_CommL_forget(MPIR_Comm * comm_ptr)
     }
     /* Record a change to the list */
     MPIR_All_communicators.sequence_number++;
-    MPID_THREAD_CS_EXIT(VCI, lock);
+    MPID_THREAD_CS_EXIT(VCI, lock, MPID_MUTEX_DBG_LOCK_ID);
 }
 
 #ifdef MPIU_PROCTABLE_NEEDED
