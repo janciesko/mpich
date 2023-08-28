@@ -113,6 +113,7 @@ typedef struct {
     int debug_enabled;
     int print_rank;
     int print_enabled;          /* 0: disabled, 1:lightly, 2: verbose, 3: very verbose */
+    int prog_poll_mask;
 #if defined(VCIEXP_LOCK_PTHREADS)
     int no_lock;
 #endif

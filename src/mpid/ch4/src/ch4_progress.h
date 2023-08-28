@@ -39,7 +39,11 @@ MPL_STATIC_INLINE_PREFIX int MPIDI_do_global_progress(void)
         return 0;
     } else {
         global_vci_poll_count++;
-        return ((global_vci_poll_count & MPIDI_CH4_PROG_POLL_MASK) == 0);
+#if defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)
+        return ((global_vci_poll_count & g_MPIU_exp_data.prog_poll_mask) == 0);
+#else
+        return MPIDI_CH4_PROG_POLL_MASK;
+#endif
     }
 }
 

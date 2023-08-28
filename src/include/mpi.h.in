@@ -1003,6 +1003,7 @@ typedef struct MPIX_Iov {
 #define MPIX_INFO_TYPE_PRINT_ENABLED   3
 #define MPIX_INFO_TYPE_NOLOCK          4
 #define MPIX_INFO_TYPE_VCIMASK         5
+#define MPIX_INFO_TYPE_PROGMASK        6
 int MPIX_Set_exp_info(int info_type, void *val1, int val2) MPICH_API_PUBLIC;
 
 #endif /* MPICH_SUPPRESS_PROTOTYPES */

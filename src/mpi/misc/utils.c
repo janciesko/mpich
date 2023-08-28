@@ -396,6 +396,7 @@ MPIU_exp_data_t g_MPIU_exp_data = {
     0,  /* debug_enabled */
     -1, /* print_rank */
     0,  /* print_enabled */
+    0xff,       /* prog_poll_mask */
 #if defined(VCIEXP_LOCK_PTHREADS)
     0,  /* no_lock */
 #endif
@@ -575,6 +576,8 @@ int MPIX_Set_exp_info(int info_type, void *val1, int val2)
 #if defined(VCIEXP_LOCK_ARGOBOTS)
         update_vci_mask(vci_mask);
 #endif
+    } else if (info_type == MPIX_INFO_TYPE_PROGMASK) {
+        g_MPIU_exp_data.prog_poll_mask = val2;
     }
 }
 
