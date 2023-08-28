@@ -254,6 +254,23 @@ static inline
 }
 
 static inline
+    void MPIDUI_Thread_cs_enter_or_skip_vci_impl(MPIDU_Thread_mutex_t * p_mutex, int mutex_id,
+                                                 int *p_skip, const char *mutex_str,
+                                                 const char *function, const char *file, int line)
+{
+    if (mutex_id <= 0 || VCIEXP_LOCK_PTHREADS_COND_OR_FALSE(!g_MPIU_exp_data.no_lock)) {
+        MPIDUI_THREAD_CS_ENTER((*p_mutex));
+        *p_skip = 0;
+    } else if (VCIEXP_LOCK_PTHREADS_COND_OR_FALSE((1 << mutex_id) & l_MPIU_exp_data.vci_mask)) {
+        /* This VCI should be checked without lock. */
+        *p_skip = 0;
+    } else {
+        /* This VCI is not associated with it. */
+        *p_skip = 1;
+    }
+}
+
+static inline
     void MPIDUI_Thread_cs_exit_vci_impl(MPIDU_Thread_mutex_t * p_mutex, int mutex_id,
                                         const char *mutex_str, const char *function,
                                         const char *file, int line)
@@ -275,8 +292,8 @@ static inline
 
 #define MPIDUI_THREAD_CS_ENTER_VCI(_mutex, _mutex_id) \
         MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, false, #_mutex, __FUNCTION__, __FILE__, __LINE__)
-#define MPIDUI_THREAD_CS_ENTER_REC_VCI(_mutex, _mutex_id) \
-        MPIDUI_Thread_cs_enter_vci_impl(&(_mutex), _mutex_id, true, #_mutex, __FUNCTION__, __FILE__, __LINE__)
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(_mutex, _mutex_id, _p_skip) \
+        MPIDUI_Thread_cs_enter_or_skip_vci_impl(&(_mutex), _mutex_id, _p_skip, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_EXIT_VCI(_mutex, _mutex_id) \
         MPIDUI_Thread_cs_exit_vci_impl(&(_mutex), _mutex_id, #_mutex, __FUNCTION__, __FILE__, __LINE__)
 #define MPIDUI_THREAD_CS_YIELD_VCI(_mutex, _mutex_id) \
@@ -286,6 +303,11 @@ static inline
 #else /* !(defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)) */
 
 #define MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_ENTER(mutex)
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(mutex, mutex_id, p_skip) \
+    do {                                                            \
+        MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id);                \
+        *(p_skip) = 0;                                              \
+    } while (0)
 #define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_EXIT(mutex)
 #define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id) MPIDUI_THREAD_CS_YIELD(mutex)
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id) MPIDUI_THREAD_ASSERT_IN_CS(mutex)
@@ -294,6 +316,10 @@ static inline
 
 #else
 #define MPIDUI_THREAD_CS_ENTER_VCI(mutex, mutex_id)     /* NOOP */
+#define MPIDUI_THREAD_CS_ENTER_OR_SKIP_VCI(mutex, mutex_id, p_skip)     \
+    do {                                                                \
+        *(p_skip) = 0;                                                  \
+    } while (0)
 #define MPIDUI_THREAD_CS_EXIT_VCI(mutex, mutex_id)      /* NOOP */
 #define MPIDUI_THREAD_CS_YIELD_VCI(mutex, mutex_id)     /* NOOP */
 #define MPIDUI_THREAD_ASSERT_IN_CS_VCI(mutex, mutex_id) /* NOOP */
