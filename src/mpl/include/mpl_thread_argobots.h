@@ -274,4 +274,121 @@ void MPL_thread_set_affinity(MPL_thread_id_t thread, int *affinity_arr, int affi
         *(int *)(err_ptr_) = err__;                                       \
     } while (0)
 
+/*
+ * Utility functions that are natively supported by the experimental version of Argobots.
+ */
+
+#ifndef ABTX_FAST_SELF_GET_TLS_PTR
+typedef struct {
+    char dummy1[64];
+    void *abt_tls_key;
+    char dummy2[64];
+} MPL_global_abt_info;
+extern MPL_global_abt_info g_abt_info;
+
+#define ABTX_FAST_TLS_SIZE 1024
+static void ABTX_FAST_SELF_GET_TLS_PTR_destructor(void *ptr)
+{
+    MPL_free(ptr);
+}
+
+static inline void *ABTX_FAST_SELF_GET_TLS_PTR(void)
+{
+    int ret;
+    ABT_key tls_key = (ABT_key) __atomic_load_n(&g_abt_info.abt_tls_key, __ATOMIC_RELAXED);
+    /* Atomically create the TLS key. */
+    while (unlikely(tls_key == 0)) {
+        ABT_key new_key;
+        ret = ABT_key_create(ABTX_FAST_SELF_GET_TLS_PTR_destructor, &new_key);
+        assert(ret == ABT_SUCCESS);
+        void *expected = NULL;
+        if (__atomic_compare_exchange_n((void **) &g_abt_info.abt_tls_key, &expected,
+                                        (void *) new_key, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE)) {
+            /* Successfully set the key. */
+            tls_key = new_key;
+            break;
+        } else {
+            ABT_key_free(&new_key);
+            tls_key = (ABT_key) __atomic_load_n(&g_abt_info.abt_tls_key, __ATOMIC_RELAXED);
+        }
+    }
+    /* Anyway, let's use this key. */
+    void *p_tls;
+    ret = ABT_self_get_specific(tls_key, (void **) &p_tls);
+    assert(ret == ABT_SUCCESS);
+    if (unlikely(!p_tls)) {
+        /* p_tls is not created. */
+        p_tls = (void *) MPL_malloc(ABTX_FAST_TLS_SIZE, MPL_MEM_OTHER);
+        /* Must be 0-initialized. */
+        memset(p_tls, 0, ABTX_FAST_TLS_SIZE);
+        ret = ABT_self_set_specific(tls_key, p_tls);
+        assert(ret == ABT_SUCCESS);
+    }
+    /* Use that p_tls. */
+    return p_tls;
+}
+
+#endif /* ABTX_FAST_SELF_GET_TLS_PTR */
+
+#ifndef ABTX_FAST_SELF_GET_ASSOCIATED_POOL
+static inline ABT_pool ABTX_FAST_SELF_GET_ASSOCIATED_POOL(void)
+{
+    int ret;
+    ABT_thread self_thread;
+    ret = ABT_self_get_thread(&self_thread);
+    assert(ret == ABT_SUCCESS);
+    ABT_pool pool;
+    ret = ABT_thread_get_last_pool(self_thread, &pool);
+    assert(ret == ABT_SUCCESS);
+    return pool;
+}
+#endif /* ABTX_FAST_SELF_GET_ASSOCIATED_POOL */
+
+#ifndef ABTX_FAST_SELF_GET_THREAD
+static inline ABT_thread ABTX_FAST_SELF_GET_THREAD(void)
+{
+    int ret;
+    ABT_thread self_thread;
+    ret = ABT_self_get_thread(&self_thread);
+    assert(ret == ABT_SUCCESS);
+    return self_thread;
+}
+#endif /* ABTX_FAST_SELF_GET_THREAD */
+
+static inline MPL_thread_id_t MPL_thread_get_self_fast(void)
+{
+    return (uintptr_t) ((void *) ABTX_FAST_SELF_GET_THREAD());
+}
+
+#ifndef ABTX_FAST_SELF_GET_TLS_PTR
+static inline void *MPL_thread_get_tls_ptr_and_self_fast(MPL_thread_id_t * p_thread_id)
+{
+    *p_thread_id = MPL_thread_get_self_fast();
+    return ABTX_FAST_SELF_GET_TLS_PTR();
+}
+#else
+static inline void *MPL_thread_get_tls_ptr_and_self_fast(MPL_thread_id_t * p_thread_id)
+{
+    void *base_tls_ptr = ABTX_fast_self_get_base_tls_ptr();
+    void **pp_thread = (void **) base_tls_ptr;
+    *p_thread_id = (uintptr_t) * pp_thread;
+    return (void *) (((char *) base_tls_ptr) + sizeof(void *));;
+}
+#endif /* ABTX_FAST_SELF_GET_TLS_PTR */
+
+#ifndef ABTX_FAST_SET_ASSOCIATED_POOL_AND_YIELD
+static inline int ABTX_FAST_SET_ASSOCIATED_POOL_AND_YIELD(ABT_pool pool)
+{
+    int ret;
+    ABT_thread self_thread;
+    ret = ABT_self_get_thread(&self_thread);
+    assert(ret == ABT_SUCCESS);
+    ret = ABT_thread_set_associated_pool(self_thread, pool);
+    assert(ret == ABT_SUCCESS);
+    ret = ABT_self_yield();
+    assert(ret == ABT_SUCCESS);
+    return ABT_SUCCESS;
+}
+#endif /* ABTX_FAST_SET_ASSOCIATED_POOL_AND_YIELD */
+
 #endif /* MPL_THREAD_ARGOBOTS_H_INCLUDED */

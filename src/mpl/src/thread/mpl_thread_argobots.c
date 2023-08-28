@@ -78,4 +78,8 @@ void MPL_thread_set_affinity(MPL_thread_id_t thread, int *affinity_arr, int affi
         *err = MPL_ERR_THREAD;
 }
 
+#ifndef ABTX_FAST_SELF_GET_TLS_PTR
+MPL_global_abt_info g_abt_info = { "", 0, "" };
+#endif
+
 #endif
