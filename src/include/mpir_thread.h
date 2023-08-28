@@ -122,7 +122,7 @@ extern MPIU_exp_data_t g_MPIU_exp_data;
 
 typedef struct {
     char dummy1[64];
-    int vci_mask;
+    uint64_t vci_mask;
 #if defined(VCIEXP_LOCK_PTHREADS)
     int local_tid;
 #endif

@@ -431,9 +431,10 @@ void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
             printf("[%2d:%2d] invalid mutex_id: %d (%s in %s() %s:%d)\n",
                    g_MPIU_exp_data.print_rank, tid, mutex_id, mutex_str, function, file, line);
             fflush(0);
+            assert(0);
             MPIR_Assert(0);
         }
-        if ((1 << mutex_id) & l_MPIU_exp_data.vci_mask) {
+        if ((((uint64_t) 1) << (uint64_t) (mutex_id - 1)) & l_MPIU_exp_data.vci_mask) {
             /* It's okay, but check a lock value just in case. */
             MPIDU_Thread_mutex_t *p_vci_lock = &MPIDI_global.vci[mutex_id].vci.lock;
             if (p_mutex != p_vci_lock) {
@@ -449,6 +450,7 @@ void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
                        g_MPIU_exp_data.print_rank, tid, mutex_id, (void *) p_mutex,
                        (void *) p_vci_lock, mutex_str, function, file, line);
                 fflush(0);
+                assert(0);
                 MPIR_Assert(0);
             }
             return;
@@ -462,7 +464,7 @@ void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
             if (ABT_self_get_xstream_rank(&rank) == ABT_SUCCESS)
                 tid = rank;
 #endif
-            printf("[%2d:%2d] invalid mutex_id: %d (mask: %d, %s in %s() %s:%d)\n",
+            printf("[%2d:%2d] invalid mutex_id: %d (mask: %" PRIu64 ", %s in %s() %s:%d)\n",
                    g_MPIU_exp_data.print_rank, tid, mutex_id, l_MPIU_exp_data.vci_mask,
                    mutex_str, function, file, line);
             fflush(0);
@@ -485,7 +487,7 @@ void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
     if (ABT_self_get_xstream_rank(&rank) == ABT_SUCCESS)
         tid = rank;
 #endif
-    printf("[%2d:%2d] %s %s (id = %d) (%s() %s:%d, nolock = %d, mask = %d)\n",
+    printf("[%2d:%2d] %s %s (id = %d) (%s() %s:%d, nolock = %d, mask = %" PRIu64 ")\n",
            g_MPIU_exp_data.print_rank, tid, msg, mutex_str, mutex_id, function, file, line, nolock,
            l_MPIU_exp_data.vci_mask);
     fflush(0);
@@ -495,17 +497,18 @@ void MPIDUI_Thread_cs_vci_print(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
 #define MAX_XSTREAMS 256
 typedef struct {
     char dummy1[64];
-    ABT_pool vci_pools[MPIDI_CH4_MAX_VCIS];     /* private pools. */
+    ABT_pool vci_pools[64];     /* private pools. */
     char dummy2[64];
 } abt_data_t;
 
 static abt_data_t g_abt_data;
 
-static void update_vci_mask(int vci_mask)
+static void update_vci_mask(uint64_t vci_mask)
 {
-    int vci, ret;
+    int ret;
     ABT_pool mypool;
     ABT_xstream xstream;
+    uint64_t vci;
 
     ret = ABT_self_get_xstream(&xstream);
     MPIR_Assert(ret == ABT_SUCCESS);
@@ -517,13 +520,13 @@ static void update_vci_mask(int vci_mask)
         mypool = tmp_pools[1];
     }
     /* Remove the previous setting. */
-    for (vci = 0; vci < MPIDI_CH4_MAX_VCIS; vci++) {
+    for (vci = 0; vci < 64; vci++) {
         if (g_abt_data.vci_pools[vci] == mypool)
             g_abt_data.vci_pools[vci] = NULL;
     }
     /* Update this setting. */
     for (vci = 0; vci < MPIDI_CH4_MAX_VCIS; vci++) {
-        if ((1 << vci) & vci_mask) {
+        if ((((uint64_t) 1) << vci) & vci_mask) {
             /* This vci is corresponding to this ES. */
             g_abt_data.vci_pools[vci] = mypool;
         }
@@ -532,9 +535,9 @@ static void update_vci_mask(int vci_mask)
 
 ABT_pool MPIDUI_Thread_cs_get_target_pool(int mutex_id)
 {
-    ABT_pool pool = g_abt_data.vci_pools[mutex_id];
+    ABT_pool pool = g_abt_data.vci_pools[mutex_id - 1];
     if (pool == NULL) {
-        printf("mutex_id = %d\n", mutex_id);
+        printf("Error: mutex_id = %d\n", mutex_id);
         MPIR_Assert(pool != NULL);
     }
     return pool;
@@ -567,9 +570,10 @@ int MPIX_Set_exp_info(int info_type, void *val1, int val2)
         }
 #endif
     } else if (info_type == MPIX_INFO_TYPE_VCIMASK) {
-        l_MPIU_exp_data.vci_mask = val2;
+        uint64_t vci_mask = *(uint64_t *) val1;
+        l_MPIU_exp_data.vci_mask = vci_mask;
 #if defined(VCIEXP_LOCK_ARGOBOTS)
-        update_vci_mask(val2);
+        update_vci_mask(vci_mask);
 #endif
     }
 }
