@@ -437,7 +437,7 @@ void MPIDUI_Thread_cs_vci_check(MPIDU_Thread_mutex_t * p_mutex, int mutex_id, co
         }
         if ((((uint64_t) 1) << (uint64_t) (mutex_id - 1)) & l_MPIU_exp_data.vci_mask) {
             /* It's okay, but check a lock value just in case. */
-            MPIDU_Thread_mutex_t *p_vci_lock = &MPIDI_global.vci[mutex_id].vci.lock;
+            MPIDU_Thread_mutex_t *p_vci_lock = &MPIDI_global.per_vci[mutex_id].lock;
             if (p_mutex != p_vci_lock) {
                 int tid = -1;
 #if defined(VCIEXP_LOCK_PTHREADS)
@@ -579,6 +579,7 @@ int MPIX_Set_exp_info(int info_type, void *val1, int val2)
     } else if (info_type == MPIX_INFO_TYPE_PROGMASK) {
         g_MPIU_exp_data.prog_poll_mask = val2;
     }
+    return 0;
 }
 
 #else /* !(defined(VCIEXP_LOCK_PTHREADS) || defined(VCIEXP_LOCK_ARGOBOTS)) */
