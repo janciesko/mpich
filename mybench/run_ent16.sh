@@ -14,7 +14,7 @@ MPICH_PTHVCI_PATH=$(pwd)/../install_${DEVICE}_pthvci
 MPICH_PTHVCIOPT_PATH=$(pwd)/../install_${DEVICE}_pthvciopt
 MPICH_ABT_PATH=$(pwd)/../install_${DEVICE}_abt
 TIMEOUT="timeout -s 9 600"
-BIND="numactl -m 0 --cpunodebind 0"
+#BIND="numactl -m 0 --cpunodebind 0"
 export NUM_REPEATS=5
 
 ENVMSG=""

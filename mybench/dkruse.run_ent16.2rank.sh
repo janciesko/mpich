@@ -1,10 +1,13 @@
+
 DEVICE=$1
 full=$2
-if [ x"$full" = x ]; then
-  echo "Usage: sh run.sh DEVICE FULL(=0|1)"
+TRIAL=$3
+if [ x"$TRIAL" = x ]; then
+  echo "Usage: sh dkruse.run_ent16.2rank.sh DEVICE FULL(=0|1) TRIAL"
   echo "FULL = 0 : All configurations are checked, including OPT_NUM=1 ... 10."
   echo "     = 1 : Representative configurations are checked."
-  echo "DEVICE = ucx | ofi | ofisys"
+  echo "DEVICE = ucx|ofi|ofisys"
+  echo "TRIAL = 0,1,2,... : The trial number (sample number)"
   exit 1
 fi
 
@@ -35,9 +38,38 @@ ENVMSG=""
 
 date
 
+# Blake 'All' partition lscpu:
+#Architecture:        x86_64
+#CPU op-mode(s):      32-bit, 64-bit
+#Byte Order:          Little Endian
+#CPU(s):              192
+#On-line CPU(s) list: 0-191
+#Thread(s) per core:  2
+#Core(s) per socket:  48
+#Socket(s):           2
+#NUMA node(s):        2
+#Vendor ID:           GenuineIntel
+#CPU family:          6
+#Model:               143
+#Model name:          Intel(R) Xeon(R) Platinum 8468
+#Stepping:            8
+#CPU MHz:             3800.000
+#CPU max MHz:         3800.0000
+#CPU min MHz:         800.0000
+#BogoMIPS:            4200.00
+#Virtualization:      VT-x
+#L1d cache:           48K
+#L1i cache:           32K
+#L2 cache:            2048K
+#L3 cache:            107520K
+#NUMA node0 CPU(s):   0-47,96-143
+#NUMA node1 CPU(s):   48-95,144-191
+
 ${MPICH_PTH_PATH}/bin/mpiexec -n 2 hostname
 
-for repeat in $(seq 10); do
+#for repeat in $(seq 10); do
+#for repeat in $(seq 1); do
+for repeat in "$TRIAL"; do
     for comm_type in 0 1 2; do
         echo "# repeat $repeat / 10 (comm_type = $comm_type)"
         if [ x"$comm_type" = x"0" ]; then
@@ -46,10 +78,10 @@ for repeat in $(seq 10); do
             winsize_list="1000"
         fi
         for winsize in ${winsize_list}; do
-            num_entities_list="1 2 4 6 8 12 16"
+            num_entities="16"
             num_messages="500000"
-            msgsize=1
-            for num_entities in ${num_entities_list}; do
+            msgsize_list="1 4 16 64 256 1024 4096 16384 65536"
+            for msgsize in $msgsize_list; do
                 num_messages_sp=$num_messages
                 if [ x"$num_entities" != x"1" ]; then
                     num_messages_sp="50000"
@@ -122,7 +154,8 @@ for repeat in $(seq 10); do
                 COMM_TYPE=${comm_type} NUM_REPEATS=${NUM_REPEATS} ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=$num_entities MPIR_CVAR_CH4_NUM_VCIS=$(($num_entities + 2)) ${TIMEOUT} ${MPICH_ABT_PATH}/bin/mpiexec -n 2 ${BIND} ./${DEVICE}_abt.out 1 $num_entities $num_entities $num_messages $winsize $msgsize
 
                 if [ x"$full" != x0 ]; then
-                    for OPT_NUM in 1 2 3 4 5 6 7 8 9 10; do
+                    #for OPT_NUM in 1 2 3 4 5 6 7 8 9 10; do
+                    for OPT_NUM in 9 ; do
                         date
                         echo "#### abt_vci_${OPT_NUM}_Ncomm_Nes $num_messages $num_entities $winsize $msgsize $comm_type"
                         echo "${ENVMSG}COMM_TYPE=${comm_type} NUM_REPEATS=${NUM_REPEATS} ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=$num_entities MPIR_CVAR_CH4_NUM_VCIS=$(($num_entities + 2)) ${TIMEOUT} ${MPICH_ABT_PATH}_${OPT_NUM}/bin/mpiexec -n 2 ${BIND} ./${DEVICE}_abt_${OPT_NUM}.out 1 $num_entities $num_entities $num_messages $winsize $msgsize"
