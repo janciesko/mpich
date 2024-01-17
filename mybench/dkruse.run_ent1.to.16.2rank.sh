@@ -11,6 +11,9 @@ if [ x"$TRIAL" = x ]; then
   exit 1
 fi
 
+echo "export MPIR_CVAR_CH4_GLOBAL_PROGRESS=0"
+export MPIR_CVAR_CH4_GLOBAL_PROGRESS=0
+
 MPICH_PTH_PATH=$(pwd)/../install_${DEVICE}_pth
 MPICH_PTHVCI_PATH=$(pwd)/../install_${DEVICE}_pthvci
 MPICH_PTHVCIOPT_PATH=$(pwd)/../install_${DEVICE}_pthvciopt

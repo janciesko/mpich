@@ -10,6 +10,7 @@ data_dic = {}
 bw_data_dic = {}
 label_list = []
 nentities_list = []
+ncommunicators_list = []
 optype_list = []
 msgsize_list = []
 
@@ -26,6 +27,10 @@ for line in open(path):
         nentities = line.split("Number of entities: ")[1].strip()
         if not nentities in nentities_list:
             nentities_list.append(nentities)
+    if line.startswith("Number of communicators: "):
+        ncommunicators = line.split("Number of communicators: ")[1].strip()
+        if not ncommunicators in ncommunicators_list:
+            ncommunicators_list.append(ncommunicators)
     if line.startswith("Message size: "):
         msgsize = line.split("Message size: ")[1].strip()
         if not msgsize in msgsize_list:

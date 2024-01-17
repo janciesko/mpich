@@ -1,17 +1,17 @@
 #!/bin/bash
 
 #SBATCH -N 1
-#SBATCH -J 1vci
+#SBATCH -J commEnt
 #SBATCH --account=FY140001
 ##SBATCH -p all 
 #SBATCH -t 12:00:00
-#SBATCH --output=Rent16-2rank1node-blake-1vci-%x.%j.out
+#SBATCH --output=Rent1to16-2rank1node-comm_ent_improved_TM-trial-%x.%j.out
 
 
 TRIAL=$1
 if [[ -z $TRIAL ]]; then
-  echo "Usage: sh blake_mpiult.2rank1node.sh TRIAL"
-  echo "TRIAL = 0,1,2,... : The trial to run for dkruse.run_ent16.2rank.sh"
+  echo "Usage: sh blake_mpiult.2rank1node.ent.1.to.16.sh TRIAL"
+  echo "TRIAL = 0,1,2,... : The trial to run for dkruse.run_ent1to16.2rank.sh"
   exit 1
 fi
 
@@ -41,15 +41,17 @@ lscpu
 date +"%F_%T"
 
 
-#echo "sh dkruse.run_ent16.2rank.sh $DEVICE $full $TRIAL"
+#echo "sh dkruse.run_ent1.to.16.2rank.sh $DEVICE $full $TRIAL"
 #sh dkruse.run_ent16.2rank.sh $DEVICE $full $TRIAL
 
-#echo "sh dkruse.abt_9.sh $DEVICE $full $TRIAL"
-#sh dkruse.abt_9.sh $DEVICE $full $TRIAL
+#echo "sh dkruse.run_ent1.to.16.2rank.sh $DEVICE $full $TRIAL"
+#sh dkruse.run_ent1.to.16.2rank.sh $DEVICE $full $TRIAL
 
-echo "sh dkruse.run_ent1.to.16.2rank.1vci.sh $TRIAL"
-sh dkruse.run_ent1.to.16.2rank.1vci.sh $TRIAL
+#echo "sh dkruse.run_comm_ent_sweep.sh $DEVICE $full $TRIAL"
+#sh dkruse.run_comm_ent_sweep.sh $DEVICE $full $TRIAL
 
+echo "sh run_comm_ent_sweep.sh $DEVICE $full $TRIAL"
+sh run_comm_ent_sweep.sh $DEVICE $full $TRIAL
 
-echo "End :: Blake $name trail $TRIAL"
+echo "End :: Blake $name trial $TRIAL"
 date +"%F_%T"

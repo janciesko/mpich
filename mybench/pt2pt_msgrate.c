@@ -210,6 +210,7 @@ void main_thread_func(void *arg)
         assert(g_comm_size == g_num_entities * 2);
     } else {
         /* Multithreaded. */
+        printf("g_comm_size = %d\n", g_comm_size);
         assert(g_comm_size == 2);
     }
 

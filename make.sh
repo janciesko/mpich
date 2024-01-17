@@ -95,7 +95,7 @@ if  [ ! -f "argobots/install/lib/libabt.so" ]; then
 fi
 
 if  [ ! -f "argobots_unopt/install/lib/libabt.so" ]; then
-    echo "## Compile Argobots"
+    echo "## Compile Argobots Unopt"
     date
     cd argobots_unopt
     sh autogen.sh
@@ -147,6 +147,7 @@ fi
 if [ x"$OPT_NUM" != x"10" ]; then
     optcflags="${optcflags} -DVCIEXP_PER_STATE_PROGRESS_COUNTER"
 fi
+# dkruse, use this
 if [ x"$OPT_NUM" = x"9" ]; then
     optcflags=""
     fastabtpath="$(pwd)/argobots_unopt/install-fast"
