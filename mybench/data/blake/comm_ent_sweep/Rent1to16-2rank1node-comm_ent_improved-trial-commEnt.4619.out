@@ -1,0 +1,1069 @@
+/var/spool/slurm/d/job04619/slurm_script: line 20: SLURM_NNODES: command not found
+/var/spool/slurm/d/job04619/slurm_script: line 21: SLURM_NODELIST: command not found
+/var/spool/slurm/d/job04619/slurm_script: line 22: SLURM_JOB_NAME: command not found
+Starting :: Blake 
+JobID                : 4619
+TRIAL                : 481
+Num nodes            : 
+current working dir  : /home/dkruse/projects/blake.mpiult.mpich/mybench
+results dir          : results/blake
+device               : ucx
+full                 : 0
+/usr/bin/which: no mpicc in (/projects/x86-64-icelake-rocky8/compilers/gcc/12.2.0/gcc/8.5.0/base/pcw2a6a/bin:/projects/x86-64-icelake-rocky8/utilities/autoconf/2.69/gcc/8.5.0/base/ovlrfbi/bin:/projects/x86-64-icelake-rocky8/utilities/automake/1.16.5/gcc/8.5.0/base/zotuxh2/bin:/projects/x86-64-icelake-rocky8/utilities/cmake/3.26.3/gcc/8.5.0/base/fdj4tpe/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/dkruse/.local/bin:/home/dkruse/bin)
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              192
+On-line CPU(s) list: 0-191
+Thread(s) per core:  2
+Core(s) per socket:  48
+Socket(s):           2
+NUMA node(s):        2
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               143
+Model name:          Intel(R) Xeon(R) Platinum 8468
+Stepping:            8
+CPU MHz:             3800.000
+CPU max MHz:         3800.0000
+CPU min MHz:         800.0000
+BogoMIPS:            4200.00
+Virtualization:      VT-x
+L1d cache:           48K
+L1i cache:           32K
+L2 cache:            2048K
+L3 cache:            107520K
+NUMA node0 CPU(s):   0-47,96-143
+NUMA node1 CPU(s):   48-95,144-191
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cat_l2 cdp_l3 invpcid_single cdp_l2 ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect avx_vnni avx512_bf16 wbnoinvd dtherm ida arat pln pts avx512vbmi umip pku ospke waitpkg avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid bus_lock_detect cldemote movdiri movdir64b enqcmd fsrm md_clear serialize tsxldtrk pconfig arch_lbr amx_bf16 avx512_fp16 amx_tile amx_int8 flush_l1d arch_capabilities
+2024-01-05_11:04:15
+sh run_comm_ent_sweep.sh ucx 0 481
+export MPIR_CVAR_CH4_GLOBAL_PROGRESS=0
+Fri Jan  5 11:04:15 MST 2024
+blake05
+blake05
+# repeat 481 / 10 (comm_type = 0)
+dkruse -- comm_size_list=48 num_entities=1
+Fri Jan  5 11:04:15 MST 2024
+#### proc 500000 1 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 1
+88.301128[ms]
+88.427407[ms]
+87.956212[ms]
+88.393887[ms]
+88.114341[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 5.6668 M/s
+Total bandwidth: 5.6668 MB/s
+Fri Jan  5 11:04:16 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+111.496061[ms]
+105.526463[ms]
+106.129421[ms]
+105.577008[ms]
+106.290016[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.6730 M/s
+Total bandwidth: 4.6730 MB/s
+Fri Jan  5 11:04:17 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+81.749433[ms]
+81.486100[ms]
+81.282709[ms]
+81.395665[ms]
+81.525175[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 6.1363 M/s
+Total bandwidth: 6.1363 MB/s
+Fri Jan  5 11:04:18 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 1
+128.662535[ms]
+128.195904[ms]
+128.640755[ms]
+128.856646[ms]
+128.569257[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8887 M/s
+Total bandwidth: 3.8887 MB/s
+Fri Jan  5 11:04:19 MST 2024
+#### proc 500000 1 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 1
+82.509324[ms]
+83.708196[ms]
+83.261083[ms]
+83.718141[ms]
+83.119870[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 6.0054 M/s
+Total bandwidth: 6.0054 MB/s
+Fri Jan  5 11:04:21 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+106.135398[ms]
+105.398126[ms]
+105.130838[ms]
+106.939575[ms]
+106.916614[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.7127 M/s
+Total bandwidth: 4.7127 MB/s
+Fri Jan  5 11:04:23 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+79.090391[ms]
+79.930224[ms]
+78.988445[ms]
+79.286700[ms]
+79.440517[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 6.3018 M/s
+Total bandwidth: 6.3018 MB/s
+Fri Jan  5 11:04:25 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 1
+314.769604[ms]
+314.903112[ms]
+315.162506[ms]
+314.170660[ms]
+312.947135[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.5905 M/s
+Total bandwidth: 1.5905 MB/s
+Fri Jan  5 11:04:28 MST 2024
+#### proc 500000 1 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 1
+279.796386[ms]
+238.986005[ms]
+236.734907[ms]
+237.294561[ms]
+237.723522[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.0318 M/s
+Total bandwidth: 2.0318 MB/s
+Fri Jan  5 11:04:32 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+344.666147[ms]
+343.198858[ms]
+343.651086[ms]
+313.653311[ms]
+135.652386[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.6884 M/s
+Total bandwidth: 1.6884 MB/s
+Fri Jan  5 11:04:36 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 1
+300.951037[ms]
+301.489924[ms]
+276.200541[ms]
+247.079448[ms]
+212.147334[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.8688 M/s
+Total bandwidth: 1.8688 MB/s
+Fri Jan  5 11:04:40 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 1
+96.008328[ms]
+95.932829[ms]
+95.974193[ms]
+95.906372[ms]
+95.964884[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 5.2110 M/s
+Total bandwidth: 5.2110 MB/s
+Fri Jan  5 11:04:43 MST 2024
+#### proc 500000 1 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 256
+130.092853[ms]
+130.227931[ms]
+130.070561[ms]
+130.373033[ms]
+130.071291[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8415 M/s
+Total bandwidth: 983.4141 MB/s
+Fri Jan  5 11:04:45 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+221.750645[ms]
+221.685834[ms]
+221.830504[ms]
+221.898126[ms]
+221.638281[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.2548 M/s
+Total bandwidth: 577.2358 MB/s
+Fri Jan  5 11:04:47 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+100.083146[ms]
+99.993834[ms]
+100.131870[ms]
+100.776649[ms]
+99.824395[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.9922 M/s
+Total bandwidth: 1278.0118 MB/s
+Fri Jan  5 11:04:48 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 256
+126.031901[ms]
+126.212575[ms]
+126.167425[ms]
+126.249676[ms]
+126.133824[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.9635 M/s
+Total bandwidth: 1014.6570 MB/s
+Fri Jan  5 11:04:49 MST 2024
+#### proc 500000 1 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 256
+119.702257[ms]
+119.602721[ms]
+119.855412[ms]
+120.044616[ms]
+119.842303[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.1736 M/s
+Total bandwidth: 1068.4314 MB/s
+Fri Jan  5 11:04:51 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+134.374460[ms]
+133.334093[ms]
+134.111145[ms]
+133.706417[ms]
+133.814464[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.7353 M/s
+Total bandwidth: 956.2261 MB/s
+Fri Jan  5 11:04:53 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+113.969938[ms]
+113.425487[ms]
+113.181135[ms]
+113.306752[ms]
+112.523399[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.4141 M/s
+Total bandwidth: 1130.0024 MB/s
+Fri Jan  5 11:04:55 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 256
+127.399380[ms]
+128.620471[ms]
+127.886412[ms]
+127.884429[ms]
+127.934812[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.9082 M/s
+Total bandwidth: 1000.4931 MB/s
+Fri Jan  5 11:04:57 MST 2024
+#### proc 500000 1 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 256
+384.190323[ms]
+383.829214[ms]
+368.068726[ms]
+192.617101[ms]
+163.871667[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.6751 M/s
+Total bandwidth: 428.8160 MB/s
+Fri Jan  5 11:05:01 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+419.783303[ms]
+419.627976[ms]
+388.239742[ms]
+207.298140[ms]
+205.890167[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.5237 M/s
+Total bandwidth: 390.0692 MB/s
+Fri Jan  5 11:05:06 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 256
+112.594189[ms]
+112.583225[ms]
+112.640017[ms]
+112.611401[ms]
+112.345118[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.4426 M/s
+Total bandwidth: 1137.2967 MB/s
+Fri Jan  5 11:05:09 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 256
+128.284998[ms]
+128.179252[ms]
+128.159527[ms]
+128.295813[ms]
+128.237179[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8995 M/s
+Total bandwidth: 998.2597 MB/s
+Fri Jan  5 11:05:12 MST 2024
+#### proc 500000 1 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 4096
+243.534177[ms]
+243.464503[ms]
+244.024874[ms]
+243.538885[ms]
+243.543255[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.0525 M/s
+Total bandwidth: 8407.0335 MB/s
+Fri Jan  5 11:05:14 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+331.959298[ms]
+332.747974[ms]
+331.933004[ms]
+325.752349[ms]
+322.830088[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.5196 M/s
+Total bandwidth: 6224.4797 MB/s
+Fri Jan  5 11:05:17 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+242.030567[ms]
+241.984064[ms]
+242.315763[ms]
+241.921820[ms]
+241.830384[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.0661 M/s
+Total bandwidth: 8462.7738 MB/s
+Fri Jan  5 11:05:19 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 4096
+305.553765[ms]
+301.836484[ms]
+301.801706[ms]
+301.461166[ms]
+301.654611[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.6532 M/s
+Total bandwidth: 6771.5420 MB/s
+Fri Jan  5 11:05:21 MST 2024
+#### proc 500000 1 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 4096
+249.862459[ms]
+249.808688[ms]
+249.738927[ms]
+249.858330[ms]
+249.815206[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.0016 M/s
+Total bandwidth: 8198.5347 MB/s
+Fri Jan  5 11:05:24 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+325.448549[ms]
+325.536827[ms]
+325.465264[ms]
+325.614538[ms]
+325.641250[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.5360 M/s
+Total bandwidth: 6291.4634 MB/s
+Fri Jan  5 11:05:27 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+240.102116[ms]
+239.068841[ms]
+239.112751[ms]
+239.026053[ms]
+239.078113[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.0898 M/s
+Total bandwidth: 8559.6449 MB/s
+Fri Jan  5 11:05:30 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 4096
+309.629181[ms]
+309.487900[ms]
+306.556937[ms]
+305.143626[ms]
+305.596551[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.6273 M/s
+Total bandwidth: 6665.2960 MB/s
+Fri Jan  5 11:05:33 MST 2024
+#### proc 500000 1 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 4096
+256.275560[ms]
+256.556165[ms]
+256.276131[ms]
+256.395645[ms]
+256.422864[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.9503 M/s
+Total bandwidth: 7988.4895 MB/s
+Fri Jan  5 11:05:37 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+787.811065[ms]
+363.324603[ms]
+344.721308[ms]
+344.248473[ms]
+343.847888[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.1448 M/s
+Total bandwidth: 4689.0449 MB/s
+Fri Jan  5 11:05:42 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 4096
+602.022486[ms]
+510.851095[ms]
+275.422904[ms]
+275.031780[ms]
+279.588965[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.2868 M/s
+Total bandwidth: 5270.7625 MB/s
+Fri Jan  5 11:05:47 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 4096
+301.993209[ms]
+301.524311[ms]
+302.292176[ms]
+301.952258[ms]
+302.763477[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.6552 M/s
+Total bandwidth: 6779.5319 MB/s
+Fri Jan  5 11:05:52 MST 2024
+#### proc 500000 1 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 16384
+699.369519[ms]
+698.656267[ms]
+699.109163[ms]
+698.417245[ms]
+698.413538[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.7156 M/s
+Total bandwidth: 11723.8189 MB/s
+Fri Jan  5 11:05:56 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+777.496875[ms]
+777.153960[ms]
+766.920158[ms]
+725.846575[ms]
+725.811803[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6626 M/s
+Total bandwidth: 10856.1175 MB/s
+Fri Jan  5 11:06:01 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+713.570888[ms]
+711.241927[ms]
+711.809980[ms]
+711.251994[ms]
+711.457276[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.7024 M/s
+Total bandwidth: 11508.5136 MB/s
+Fri Jan  5 11:06:06 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 16384
+779.657347[ms]
+745.095812[ms]
+744.970111[ms]
+745.571799[ms]
+745.697917[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6648 M/s
+Total bandwidth: 10891.4379 MB/s
+Fri Jan  5 11:06:11 MST 2024
+#### proc 500000 1 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 16384
+733.863400[ms]
+733.710214[ms]
+734.626067[ms]
+733.938588[ms]
+733.946781[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6812 M/s
+Total bandwidth: 11161.2186 MB/s
+Fri Jan  5 11:06:17 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+719.984803[ms]
+718.966862[ms]
+721.325177[ms]
+720.407071[ms]
+719.840213[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6944 M/s
+Total bandwidth: 11376.8496 MB/s
+Fri Jan  5 11:06:23 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+704.273729[ms]
+703.670757[ms]
+705.226033[ms]
+704.422512[ms]
+704.553496[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.7098 M/s
+Total bandwidth: 11630.0163 MB/s
+Fri Jan  5 11:06:28 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 16384
+731.805425[ms]
+731.033031[ms]
+731.028208[ms]
+730.951108[ms]
+730.660773[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6839 M/s
+Total bandwidth: 11205.8164 MB/s
+Fri Jan  5 11:06:34 MST 2024
+#### proc 500000 1 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 16384
+775.063754[ms]
+758.870555[ms]
+722.268040[ms]
+721.406125[ms]
+721.665732[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6759 M/s
+Total bandwidth: 11073.1509 MB/s
+Fri Jan  5 11:06:42 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+828.843051[ms]
+817.674244[ms]
+749.770490[ms]
+749.197047[ms]
+749.881403[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6418 M/s
+Total bandwidth: 10515.7305 MB/s
+Fri Jan  5 11:06:50 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 16384
+769.872363[ms]
+721.773453[ms]
+722.334104[ms]
+720.781929[ms]
+719.714313[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6841 M/s
+Total bandwidth: 11208.8900 MB/s
+Fri Jan  5 11:06:57 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 16384
+741.766256[ms]
+792.854436[ms]
+830.771834[ms]
+829.285315[ms]
+827.962309[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.6215 M/s
+Total bandwidth: 10183.0191 MB/s
+Fri Jan  5 11:07:05 MST 2024
+#### proc 500000 1 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 65536
+2711.370796[ms]
+2718.546711[ms]
+2714.263377[ms]
+2714.946760[ms]
+2714.198645[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1842 M/s
+Total bandwidth: 12071.5057 MB/s
+Fri Jan  5 11:07:22 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2718.648451[ms]
+2717.271485[ms]
+2720.339970[ms]
+2713.873299[ms]
+2713.097220[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1841 M/s
+Total bandwidth: 12062.7038 MB/s
+Fri Jan  5 11:07:38 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2649.835234[ms]
+2637.449119[ms]
+2637.581539[ms]
+2637.150715[ms]
+2668.304938[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1890 M/s
+Total bandwidth: 12384.4674 MB/s
+Fri Jan  5 11:07:55 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 65536
+2807.180233[ms]
+2817.418038[ms]
+2812.429987[ms]
+2813.163896[ms]
+2812.821968[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1778 M/s
+Total bandwidth: 11651.1641 MB/s
+Fri Jan  5 11:08:12 MST 2024
+#### proc 500000 1 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 65536
+2646.144178[ms]
+2644.667354[ms]
+2653.021536[ms]
+2646.649785[ms]
+2643.995394[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1889 M/s
+Total bandwidth: 12380.5777 MB/s
+Fri Jan  5 11:08:29 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2712.202384[ms]
+2678.771691[ms]
+2670.880590[ms]
+2674.107888[ms]
+2677.270821[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1864 M/s
+Total bandwidth: 12215.5845 MB/s
+Fri Jan  5 11:08:47 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2696.313625[ms]
+2732.661683[ms]
+2712.459227[ms]
+2712.390937[ms]
+2711.723080[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1843 M/s
+Total bandwidth: 12078.4268 MB/s
+Fri Jan  5 11:09:04 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 65536
+2816.574881[ms]
+2815.353476[ms]
+2816.719564[ms]
+2814.184370[ms]
+2815.170001[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1776 M/s
+Total bandwidth: 11638.7597 MB/s
+Fri Jan  5 11:09:22 MST 2024
+#### proc 500000 1 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 2  ./ucx_pth.out 0 1 1 500000 32 65536
+2788.792654[ms]
+2787.480167[ms]
+2787.304517[ms]
+2786.992055[ms]
+2785.620883[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1794 M/s
+Total bandwidth: 11757.1935 MB/s
+Fri Jan  5 11:09:42 MST 2024
+#### pth_vciopt_Ncomm 500000 1 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2727.849306[ms]
+2725.256823[ms]
+2726.767880[ms]
+2726.247585[ms]
+2725.971598[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1834 M/s
+Total bandwidth: 12019.4664 MB/s
+Fri Jan  5 11:10:01 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 1 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 1 48 500000 32 65536
+2719.859267[ms]
+2713.793430[ms]
+2715.999201[ms]
+2715.074104[ms]
+2715.196541[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1841 M/s
+Total bandwidth: 12065.6421 MB/s
+Fri Jan  5 11:10:21 MST 2024
+#### abt_vci_Ncomm_Nes 500000 1 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=1 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 1 48 500000 32 65536
+2954.122712[ms]
+2952.487074[ms]
+2951.537848[ms]
+2950.630598[ms]
+2950.472293[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 1
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.1694 M/s
+Total bandwidth: 11101.5451 MB/s
+completed!
+End :: Blake  trial 481
+2024-01-05_11:10:41

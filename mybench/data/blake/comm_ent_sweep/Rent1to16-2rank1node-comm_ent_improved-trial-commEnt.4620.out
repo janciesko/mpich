@@ -1,0 +1,1889 @@
+/var/spool/slurm/d/job04620/slurm_script: line 20: SLURM_NNODES: command not found
+/var/spool/slurm/d/job04620/slurm_script: line 21: SLURM_NODELIST: command not found
+/var/spool/slurm/d/job04620/slurm_script: line 22: SLURM_JOB_NAME: command not found
+Starting :: Blake 
+JobID                : 4620
+TRIAL                : 4816
+Num nodes            : 
+current working dir  : /home/dkruse/projects/blake.mpiult.mpich/mybench
+results dir          : results/blake
+device               : ucx
+full                 : 0
+/usr/bin/which: no mpicc in (/projects/x86-64-icelake-rocky8/compilers/gcc/12.2.0/gcc/8.5.0/base/pcw2a6a/bin:/projects/x86-64-icelake-rocky8/utilities/autoconf/2.69/gcc/8.5.0/base/ovlrfbi/bin:/projects/x86-64-icelake-rocky8/utilities/automake/1.16.5/gcc/8.5.0/base/zotuxh2/bin:/projects/x86-64-icelake-rocky8/utilities/cmake/3.26.3/gcc/8.5.0/base/fdj4tpe/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/dkruse/.local/bin:/home/dkruse/bin)
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              192
+On-line CPU(s) list: 0-191
+Thread(s) per core:  2
+Core(s) per socket:  48
+Socket(s):           2
+NUMA node(s):        2
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               143
+Model name:          Intel(R) Xeon(R) Platinum 8468
+Stepping:            8
+CPU MHz:             3800.000
+CPU max MHz:         3800.0000
+CPU min MHz:         800.0000
+BogoMIPS:            4200.00
+Virtualization:      VT-x
+L1d cache:           48K
+L1i cache:           32K
+L2 cache:            2048K
+L3 cache:            107520K
+NUMA node0 CPU(s):   0-47,96-143
+NUMA node1 CPU(s):   48-95,144-191
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cat_l2 cdp_l3 invpcid_single cdp_l2 ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect avx_vnni avx512_bf16 wbnoinvd dtherm ida arat pln pts avx512vbmi umip pku ospke waitpkg avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid bus_lock_detect cldemote movdiri movdir64b enqcmd fsrm md_clear serialize tsxldtrk pconfig arch_lbr amx_bf16 avx512_fp16 amx_tile amx_int8 flush_l1d arch_capabilities
+2024-01-05_11:04:35
+sh run_comm_ent_sweep.sh ucx 0 4816
+export MPIR_CVAR_CH4_GLOBAL_PROGRESS=0
+Fri Jan  5 11:04:35 MST 2024
+blake09
+blake09
+# repeat 4816 / 10 (comm_type = 0)
+dkruse -- comm_size_list=48 num_entities=16
+Fri Jan  5 11:04:35 MST 2024
+#### proc 500000 16 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 1
+346.321258[ms]
+345.391596[ms]
+291.850833[ms]
+273.908293[ms]
+270.260581[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 26.1843 M/s
+Total bandwidth: 26.1843 MB/s
+Fri Jan  5 11:04:40 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+504.961691[ms]
+492.249615[ms]
+507.029313[ms]
+507.235738[ms]
+506.816658[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 15.8848 M/s
+Total bandwidth: 15.8848 MB/s
+Fri Jan  5 11:04:43 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+447.786556[ms]
+445.926449[ms]
+450.704225[ms]
+445.290734[ms]
+451.039987[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.8523 M/s
+Total bandwidth: 17.8523 MB/s
+Fri Jan  5 11:04:47 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 1 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 1
+567.017526[ms]
+528.442680[ms]
+509.690496[ms]
+522.304410[ms]
+512.782544[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 15.1511 M/s
+Total bandwidth: 15.1511 MB/s
+Fri Jan  5 11:04:51 MST 2024
+#### proc 500000 16 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 1
+[1704477899.012632] [blake09:3193813:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.012645] [blake09:3193813:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+[1704477899.012634] [blake09:3193831:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=371) failed: Cannot allocate memory
+[1704477899.012645] [blake09:3193831:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+[1704477899.012611] [blake09:3193833:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=375) failed: Cannot allocate memory
+[1704477899.012629] [blake09:3193833:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000420030bbef: Shared memory error
+[1704477899.012659] [blake09:3193812:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=333) failed: Cannot allocate memory
+[1704477899.012675] [blake09:3193812:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.013568] [blake09:3193820:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=349) failed: Cannot allocate memory
+[1704477899.013581] [blake09:3193820:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.016629] [blake09:3193841:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=391) failed: Cannot allocate memory
+[1704477899.016641] [blake09:3193841:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+[1704477899.016690] [blake09:3193818:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=345) failed: Cannot allocate memory
+[1704477899.016704] [blake09:3193818:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000420030bbef: Shared memory error
+[1704477899.016738] [blake09:3193834:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=377) failed: Cannot allocate memory
+[1704477899.016749] [blake09:3193834:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.016837] [blake09:3193823:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.016850] [blake09:3193823:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.017100] [blake09:3193824:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.017111] [blake09:3193824:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.017721] [blake09:3193836:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.017731] [blake09:3193836:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.019040] [blake09:3193842:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.019053] [blake09:3193842:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.019428] [blake09:3193828:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193833/fd/362 flags=0x0) failed: Permission denied
+[1704477899.019460] [blake09:3193828:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005a8030bbe9: Shared memory error
+[1704477899.019598] [blake09:3193819:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193831/fd/248 flags=0x0) failed: Permission denied
+[1704477899.019610] [blake09:3193819:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e0030bbe7: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.019603] [blake09:3193829:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193831/fd/248 flags=0x0) failed: Permission denied
+[1704477899.019616] [blake09:3193829:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e0030bbe7: Shared memory error
+[1704477899.019657] [blake09:3193843:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=395) failed: Cannot allocate memory
+[1704477899.019676] [blake09:3193843:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+[1704477899.019746] [blake09:3193832:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.019760] [blake09:3193832:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.020097] [blake09:3193830:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=369) failed: Cannot allocate memory
+[1704477899.020113] [blake09:3193830:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+[1704477899.020111] [blake09:3193817:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193831/fd/25 flags=0x0) failed: Permission denied
+[1704477899.020134] [blake09:3193817:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe7: Shared memory error
+[1704477899.020246] [blake09:3193827:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111543528) failed: Cannot allocate memory
+[1704477899.020258] [blake09:3193827:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a604e8: Shared memory error
+[1704477899.020311] [blake09:3193839:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=387) failed: Cannot allocate memory
+[1704477899.020324] [blake09:3193839:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.020726] [blake09:3193835:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=379) failed: Cannot allocate memory
+[1704477899.020739] [blake09:3193835:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+[1704477899.020772] [blake09:3193840:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=389) failed: Cannot allocate memory
+[1704477899.020784] [blake09:3193840:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bbef: Shared memory error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.021704] [blake09:3193837:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193839/fd/85 flags=0x0) failed: Permission denied
+[1704477899.021722] [blake09:3193837:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000154030bbef: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.022253] [blake09:3193821:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193828/fd/25 flags=0x0) failed: Permission denied
+[1704477899.022275] [blake09:3193821:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe4: Shared memory error
+[1704477899.022267] [blake09:3193814:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193828/fd/25 flags=0x0) failed: Permission denied
+[1704477899.022271] [blake09:3193815:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193828/fd/25 flags=0x0) failed: Permission denied
+[1704477899.022294] [blake09:3193815:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe4: Shared memory error
+[1704477899.022293] [blake09:3193814:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe4: Shared memory error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.022702] [blake09:3193822:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193843/fd/25 flags=0x0) failed: Permission denied
+[1704477899.022721] [blake09:3193822:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbf3: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.022916] [blake09:3193825:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193837/fd/320 flags=0x0) failed: Permission denied
+[1704477899.022930] [blake09:3193825:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000500030bbed: Shared memory error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.023094] [blake09:3193838:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193843/fd/25 flags=0x0) failed: Permission denied
+[1704477899.023108] [blake09:3193838:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbf3: Shared memory error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.024037] [blake09:3193826:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193828/fd/25 flags=0x0) failed: Permission denied
+[1704477899.024061] [blake09:3193826:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe4: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+[1704477899.025402] [blake09:3193816:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3193828/fd/25 flags=0x0) failed: Permission denied
+[1704477899.025419] [blake09:3193816:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bbe4: Shared memory error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:05:02 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+519.251633[ms]
+519.957530[ms]
+482.086831[ms]
+480.703313[ms]
+519.274974[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 15.8660 M/s
+Total bandwidth: 15.8660 MB/s
+Fri Jan  5 11:05:06 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+463.860032[ms]
+466.436151[ms]
+458.441381[ms]
+469.717272[ms]
+466.483549[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.2059 M/s
+Total bandwidth: 17.2059 MB/s
+Fri Jan  5 11:05:11 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 1 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 1
+316.308237[ms]
+392.908933[ms]
+390.822526[ms]
+405.087627[ms]
+400.626870[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 20.9904 M/s
+Total bandwidth: 20.9904 MB/s
+Fri Jan  5 11:05:15 MST 2024
+#### proc 500000 16 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 1
+[1704477930.940068] [blake09:3194126:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111739180) failed: Cannot allocate memory
+[1704477930.940087] [blake09:3194126:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a9012c: Shared memory error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.943852] [blake09:3194098:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=111739222) failed: Cannot allocate memory
+[1704477930.943869] [blake09:3194098:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6a90156: Shared memory error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.945089] [blake09:3194104:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194098/fd/496 flags=0x0) failed: Permission denied
+[1704477930.945120] [blake09:3194104:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000007c0030bcf2: Shared memory error
+[1704477930.945121] [blake09:3194124:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194098/fd/256 flags=0x0) failed: Permission denied
+[1704477930.945135] [blake09:3194124:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000400030bcf2: Shared memory error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.955477] [blake09:3194116:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194126/fd/25 flags=0x0) failed: Permission denied
+[1704477930.955493] [blake09:3194116:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd0e: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.956161] [blake09:3194105:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/252 flags=0x0) failed: Permission denied
+[1704477930.956186] [blake09:3194105:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003f0030bd04: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.956485] [blake09:3194106:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.956499] [blake09:3194106:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+[1704477930.956478] [blake09:3194110:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.956494] [blake09:3194110:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.958890] [blake09:3194095:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958915] [blake09:3194095:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.958889] [blake09:3194096:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958915] [blake09:3194096:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.958895] [blake09:3194100:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958915] [blake09:3194100:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.958905] [blake09:3194119:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958926] [blake09:3194119:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.958890] [blake09:3194121:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958915] [blake09:3194121:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.958911] [blake09:3194109:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194104/fd/25 flags=0x0) failed: Permission denied
+[1704477930.958934] [blake09:3194109:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bcf8: Shared memory error
+[1704477930.959111] [blake09:3194114:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.959127] [blake09:3194114:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.960095] [blake09:3194112:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.960111] [blake09:3194112:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.961225] [blake09:3194108:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/138 flags=0x0) failed: Permission denied
+[1704477930.961240] [blake09:3194108:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000228030bcfd: Shared memory error
+[1704477930.961219] [blake09:3194115:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/118 flags=0x0) failed: Permission denied
+[1704477930.961234] [blake09:3194115:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d8030bcfd: Shared memory error
+[1704477930.961232] [blake09:3194107:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/138 flags=0x0) failed: Permission denied
+[1704477930.961244] [blake09:3194107:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000228030bcfd: Shared memory error
+[1704477930.961229] [blake09:3194120:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/138 flags=0x0) failed: Permission denied
+[1704477930.961242] [blake09:3194120:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000228030bcfd: Shared memory error
+[1704477930.961231] [blake09:3194123:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/138 flags=0x0) failed: Permission denied
+[1704477930.961244] [blake09:3194123:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000228030bcfd: Shared memory error
+[1704477930.961260] [blake09:3194113:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194109/fd/118 flags=0x0) failed: Permission denied
+[1704477930.961273] [blake09:3194113:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d8030bcfd: Shared memory error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.961582] [blake09:3194117:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.961593] [blake09:3194117:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+[1704477930.961683] [blake09:3194118:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.961700] [blake09:3194118:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.961975] [blake09:3194099:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.961989] [blake09:3194099:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+[1704477930.961997] [blake09:3194102:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.962008] [blake09:3194102:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+[1704477930.962169] [blake09:3194097:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.962184] [blake09:3194097:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.962198] [blake09:3194125:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.962209] [blake09:3194125:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.963814] [blake09:3194111:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194113/fd/25 flags=0x0) failed: Permission denied
+[1704477930.963833] [blake09:3194111:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd01: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.967155] [blake09:3194101:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.967174] [blake09:3194101:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+[1704477930.967150] [blake09:3194103:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194116/fd/25 flags=0x0) failed: Permission denied
+[1704477930.967172] [blake09:3194103:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bd04: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704477930.968657] [blake09:3194122:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194115/fd/470 flags=0x0) failed: Permission denied
+[1704477930.968689] [blake09:3194122:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000758030bd03: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:05:37 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+499.462227[ms]
+496.244419[ms]
+489.151804[ms]
+499.886317[ms]
+501.388289[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 16.0903 M/s
+Total bandwidth: 16.0903 MB/s
+Fri Jan  5 11:05:43 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 1
+415.540283[ms]
+413.539962[ms]
+412.348662[ms]
+422.534961[ms]
+424.149907[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 19.1573 M/s
+Total bandwidth: 19.1573 MB/s
+Fri Jan  5 11:05:48 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 1 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 1
+450.013755[ms]
+451.265442[ms]
+448.507585[ms]
+455.887853[ms]
+467.368068[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 1
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.5987 M/s
+Total bandwidth: 17.5987 MB/s
+Fri Jan  5 11:05:54 MST 2024
+#### proc 500000 16 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 256
+396.889073[ms]
+406.855725[ms]
+419.549392[ms]
+419.673617[ms]
+418.749473[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 19.4025 M/s
+Total bandwidth: 4967.0512 MB/s
+Fri Jan  5 11:05:59 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+549.725860[ms]
+549.159489[ms]
+549.189924[ms]
+555.887879[ms]
+551.870269[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 14.5156 M/s
+Total bandwidth: 3715.9922 MB/s
+Fri Jan  5 11:06:03 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+452.117871[ms]
+459.424911[ms]
+459.015915[ms]
+459.488312[ms]
+466.843787[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.4160 M/s
+Total bandwidth: 4458.4860 MB/s
+Fri Jan  5 11:06:07 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 256 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 256
+606.291277[ms]
+615.831635[ms]
+609.704790[ms]
+648.913318[ms]
+515.437699[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 13.3512 M/s
+Total bandwidth: 3417.9054 MB/s
+Fri Jan  5 11:06:11 MST 2024
+#### proc 500000 16 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 256
+[1704477979.329504] [blake09:3194691:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=387) failed: Cannot allocate memory
+[1704477979.329520] [blake09:3194691:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bf43: Shared memory error
+[1704477979.329406] [blake09:3194695:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=395) failed: Cannot allocate memory
+[1704477979.329428] [blake09:3194695:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030bf43: Shared memory error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.330272] [blake09:3194685:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/392 flags=0x0) failed: Permission denied
+[1704477979.330286] [blake09:3194685:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000620030bf47: Shared memory error
+[1704477979.330275] [blake09:3194694:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/362 flags=0x0) failed: Permission denied
+[1704477979.330288] [blake09:3194694:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005a8030bf47: Shared memory error
+[1704477979.330280] [blake09:3194680:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/382 flags=0x0) failed: Permission denied
+[1704477979.330293] [blake09:3194680:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005f8030bf47: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.330285] [blake09:3194681:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/342 flags=0x0) failed: Permission denied
+[1704477979.330300] [blake09:3194681:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000558030bf47: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.330289] [blake09:3194686:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/382 flags=0x0) failed: Permission denied
+[1704477979.330303] [blake09:3194686:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005f8030bf47: Shared memory error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.330868] [blake09:3194679:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194695/fd/25 flags=0x0) failed: Permission denied
+[1704477979.330896] [blake09:3194679:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf47: Shared memory error
+[1704477979.331150] [blake09:3194671:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194694/fd/340 flags=0x0) failed: Permission denied
+[1704477979.331178] [blake09:3194671:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000550030bf46: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.331287] [blake09:3194688:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194685/fd/102 flags=0x0) failed: Permission denied
+[1704477979.331307] [blake09:3194688:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000198030bf3d: Shared memory error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.331621] [blake09:3194690:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194680/fd/25 flags=0x0) failed: Permission denied
+[1704477979.331641] [blake09:3194690:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf38: Shared memory error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.333186] [blake09:3194678:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194694/fd/25 flags=0x0) failed: Permission denied
+[1704477979.333205] [blake09:3194678:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf46: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.334156] [blake09:3194693:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194685/fd/25 flags=0x0) failed: Permission denied
+[1704477979.334171] [blake09:3194693:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf3d: Shared memory error
+[1704477979.334176] [blake09:3194666:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194685/fd/25 flags=0x0) failed: Permission denied
+[1704477979.334190] [blake09:3194666:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf3d: Shared memory error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.335456] [blake09:3194670:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194685/fd/25 flags=0x0) failed: Permission denied
+[1704477979.335480] [blake09:3194670:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf3d: Shared memory error
+[1704477979.335614] [blake09:3194665:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194680/fd/25 flags=0x0) failed: Permission denied
+[1704477979.335632] [blake09:3194665:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf38: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.336824] [blake09:3194664:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194685/fd/25 flags=0x0) failed: Permission denied
+[1704477979.336842] [blake09:3194664:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf3d: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.341170] [blake09:3194675:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/224 flags=0x0) failed: Permission denied
+[1704477979.341188] [blake09:3194675:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000380030bf2f: Shared memory error
+[1704477979.341181] [blake09:3194677:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/44 flags=0x0) failed: Permission denied
+[1704477979.341196] [blake09:3194677:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000b0030bf2f: Shared memory error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.341639] [blake09:3194692:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/25 flags=0x0) failed: Permission denied
+[1704477979.341658] [blake09:3194692:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf2f: Shared memory error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.342034] [blake09:3194682:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342049] [blake09:3194682:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf2f: Shared memory error
+[1704477979.342262] [blake09:3194667:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342041] [blake09:3194676:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342055] [blake09:3194676:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf2f: Shared memory error
+[1704477979.342274] [blake09:3194667:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf2f: Shared memory error
+[1704477979.342298] [blake09:3194669:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194671/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342316] [blake09:3194669:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf2f: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.342972] [blake09:3194684:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194675/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342986] [blake09:3194684:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf33: Shared memory error
+[1704477979.342981] [blake09:3194673:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194675/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342994] [blake09:3194673:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf33: Shared memory error
+[1704477979.342985] [blake09:3194674:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194675/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342999] [blake09:3194674:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf33: Shared memory error
+[1704477979.342986] [blake09:3194683:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194675/fd/25 flags=0x0) failed: Permission denied
+[1704477979.342998] [blake09:3194683:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf33: Shared memory error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.343441] [blake09:3194672:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194675/fd/25 flags=0x0) failed: Permission denied
+[1704477979.343459] [blake09:3194672:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf33: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.344000] [blake09:3194689:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194674/fd/200 flags=0x0) failed: Permission denied
+[1704477979.344015] [blake09:3194689:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000320030bf32: Shared memory error
+[1704477979.344039] [blake09:3194668:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194674/fd/200 flags=0x0) failed: Permission denied
+[1704477979.344057] [blake09:3194668:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000320030bf32: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+[1704477979.344221] [blake09:3194687:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194674/fd/25 flags=0x0) failed: Permission denied
+[1704477979.344235] [blake09:3194687:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030bf32: Shared memory error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:06:22 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+574.682418[ms]
+564.038699[ms]
+575.412261[ms]
+558.477967[ms]
+573.843597[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 14.0535 M/s
+Total bandwidth: 3597.6875 MB/s
+Fri Jan  5 11:06:27 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+496.933515[ms]
+479.946666[ms]
+479.626231[ms]
+476.337466[ms]
+478.137796[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 16.5918 M/s
+Total bandwidth: 4247.5044 MB/s
+Fri Jan  5 11:06:31 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 256 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 256
+496.266389[ms]
+486.586141[ms]
+508.007485[ms]
+504.266373[ms]
+504.229951[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 16.0051 M/s
+Total bandwidth: 4097.3171 MB/s
+Fri Jan  5 11:06:36 MST 2024
+#### proc 500000 16 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 256
+[1704478012.329742] [blake09:3194954:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=501) failed: Cannot allocate memory
+[1704478012.329764] [blake09:3194954:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d0030c05d: Shared memory error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.358304] [blake09:3194951:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=112329052) failed: Cannot allocate memory
+[1704478012.358325] [blake09:3194951:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6b2015c: Shared memory error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.358704] [blake09:3194956:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194954/fd/28 flags=0x0) failed: Permission denied
+[1704478012.358729] [blake09:3194956:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c04a: Shared memory error
+[1704478012.358719] [blake09:3194952:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194954/fd/28 flags=0x0) failed: Permission denied
+[1704478012.358744] [blake09:3194952:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c04a: Shared memory error
+[1704478012.358715] [blake09:3194953:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194954/fd/28 flags=0x0) failed: Permission denied
+[1704478012.358736] [blake09:3194953:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c04a: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.362473] [blake09:3194968:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.362494] [blake09:3194968:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+[1704478012.362542] [blake09:3194964:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.362558] [blake09:3194964:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+[1704478012.362547] [blake09:3194965:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.362560] [blake09:3194965:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+[1704478012.362541] [blake09:3194978:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.362557] [blake09:3194978:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.363093] [blake09:3194967:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.363104] [blake09:3194967:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+[1704478012.363194] [blake09:3194955:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.363210] [blake09:3194955:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.363420] [blake09:3194950:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194951/fd/22 flags=0x0) failed: Permission denied
+[1704478012.363433] [blake09:3194950:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c047: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.363581] [blake09:3194962:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194954/fd/28 flags=0x0) failed: Permission denied
+[1704478012.363594] [blake09:3194962:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c04a: Shared memory error
+[1704478012.363582] [blake09:3194980:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194954/fd/28 flags=0x0) failed: Permission denied
+[1704478012.363597] [blake09:3194980:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c04a: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.364601] [blake09:3194963:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/30 flags=0x0) failed: Permission denied
+[1704478012.364616] [blake09:3194963:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000078030c046: Shared memory error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.366811] [blake09:3194966:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=525) failed: Cannot allocate memory
+[1704478012.366823] [blake09:3194966:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d0030c05d: Shared memory error
+[1704478012.366850] [blake09:3194981:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=112329052) failed: Cannot allocate memory
+[1704478012.366861] [blake09:3194981:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6b2015c: Shared memory error
+[1704478012.366859] [blake09:3194974:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=112329052) failed: Cannot allocate memory
+[1704478012.366871] [blake09:3194974:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6b2015c: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.367822] [blake09:3194957:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.367836] [blake09:3194957:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.369517] [blake09:3194972:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.369531] [blake09:3194972:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+[1704478012.369644] [blake09:3194970:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.369658] [blake09:3194970:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+[1704478012.369654] [blake09:3194977:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.369671] [blake09:3194977:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.369785] [blake09:3194969:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.369800] [blake09:3194969:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.369879] [blake09:3194975:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.369891] [blake09:3194975:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.370000] [blake09:3194971:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.370013] [blake09:3194971:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.370301] [blake09:3194979:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.370316] [blake09:3194979:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+[1704478012.370317] [blake09:3194973:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194950/fd/20 flags=0x0) failed: Permission denied
+[1704478012.370330] [blake09:3194973:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000050030c046: Shared memory error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.371000] [blake09:3194959:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194978/fd/25 flags=0x0) failed: Permission denied
+[1704478012.371016] [blake09:3194959:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c062: Shared memory error
+[1704478012.371011] [blake09:3194961:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194978/fd/25 flags=0x0) failed: Permission denied
+[1704478012.371033] [blake09:3194961:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c062: Shared memory error
+[1704478012.371059] [blake09:3194976:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194978/fd/25 flags=0x0) failed: Permission denied
+[1704478012.371082] [blake09:3194976:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c062: Shared memory error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.372228] [blake09:3194958:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194978/fd/25 flags=0x0) failed: Permission denied
+[1704478012.372250] [blake09:3194958:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c062: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704478012.373823] [blake09:3194960:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3194978/fd/25 flags=0x0) failed: Permission denied
+[1704478012.373840] [blake09:3194960:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c062: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:06:58 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+521.088377[ms]
+521.693050[ms]
+517.430557[ms]
+520.019013[ms]
+519.734366[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 15.3858 M/s
+Total bandwidth: 3938.7661 MB/s
+Fri Jan  5 11:07:04 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 256
+449.488574[ms]
+449.416829[ms]
+450.150677[ms]
+436.633602[ms]
+448.883207[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.9017 M/s
+Total bandwidth: 4582.8245 MB/s
+Fri Jan  5 11:07:09 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 256 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 256
+465.936549[ms]
+465.451631[ms]
+449.556779[ms]
+445.112723[ms]
+450.709786[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 256
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 17.5699 M/s
+Total bandwidth: 4497.8925 MB/s
+Fri Jan  5 11:07:16 MST 2024
+#### proc 500000 16 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 4096
+771.589232[ms]
+772.266589[ms]
+767.308720[ms]
+768.238401[ms]
+768.633302[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 10.3956 M/s
+Total bandwidth: 42580.2865 MB/s
+Fri Jan  5 11:07:23 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+910.001240[ms]
+916.556335[ms]
+914.370095[ms]
+915.049999[ms]
+910.926606[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 8.7592 M/s
+Total bandwidth: 35877.8017 MB/s
+Fri Jan  5 11:07:29 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+890.010381[ms]
+859.586312[ms]
+879.869012[ms]
+823.826060[ms]
+855.888552[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 9.2831 M/s
+Total bandwidth: 38023.5854 MB/s
+Fri Jan  5 11:07:35 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 4096 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 4096
+993.569990[ms]
+996.951112[ms]
+1000.498151[ms]
+1017.985322[ms]
+1016.616995[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 7.9597 M/s
+Total bandwidth: 32603.0290 MB/s
+Fri Jan  5 11:07:42 MST 2024
+#### proc 500000 16 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 4096
+[1704478069.913847] [blake09:3195547:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=389) failed: Cannot allocate memory
+[1704478069.913868] [blake09:3195547:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030c29a: Shared memory error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914503] [blake09:3195526:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/45 flags=0x0) failed: Permission denied
+[1704478069.914518] [blake09:3195526:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000b4030c29b: Shared memory error
+[1704478069.914498] [blake09:3195540:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/45 flags=0x0) failed: Permission denied
+[1704478069.914514] [blake09:3195540:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000b4030c29b: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914608] [blake09:3195528:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.914621] [blake09:3195528:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914727] [blake09:3195533:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.914740] [blake09:3195533:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914836] [blake09:3195534:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.914849] [blake09:3195534:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+[1704478069.914796] [blake09:3195539:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.914808] [blake09:3195539:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914527] [blake09:3195543:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/45 flags=0x0) failed: Permission denied
+[1704478069.914540] [blake09:3195543:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000b4030c29b: Shared memory error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.914608] [blake09:3195544:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.914620] [blake09:3195544:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.915104] [blake09:3195548:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.915118] [blake09:3195548:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+[1704478069.915111] [blake09:3195542:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.915125] [blake09:3195542:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+[1704478069.915484] [blake09:3195529:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.915498] [blake09:3195529:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+[1704478069.915544] [blake09:3195527:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195540/fd/152 flags=0x0) failed: Permission denied
+[1704478069.915556] [blake09:3195527:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000260030c294: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.915658] [blake09:3195532:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195539/fd/25 flags=0x0) failed: Permission denied
+[1704478069.915675] [blake09:3195532:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c293: Shared memory error
+[1704478069.915543] [blake09:3195537:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195540/fd/262 flags=0x0) failed: Permission denied
+[1704478069.915556] [blake09:3195537:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000418030c294: Shared memory error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.915583] [blake09:3195545:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195539/fd/88 flags=0x0) failed: Permission denied
+[1704478069.915595] [blake09:3195545:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000160030c293: Shared memory error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.915571] [blake09:3195550:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195539/fd/88 flags=0x0) failed: Permission denied
+[1704478069.915584] [blake09:3195550:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000160030c293: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.916442] [blake09:3195538:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195539/fd/25 flags=0x0) failed: Permission denied
+[1704478069.916458] [blake09:3195538:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c293: Shared memory error
+[1704478069.916470] [blake09:3195530:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195542/fd/216 flags=0x0) failed: Permission denied
+[1704478069.916484] [blake09:3195530:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000360030c296: Shared memory error
+[1704478069.916547] [blake09:3195522:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195542/fd/366 flags=0x0) failed: Permission denied
+[1704478069.916578] [blake09:3195522:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005b8030c296: Shared memory error
+[1704478069.916627] [blake09:3195525:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195537/fd/106 flags=0x0) failed: Permission denied
+[1704478069.916646] [blake09:3195525:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001a8030c291: Shared memory error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.916569] [blake09:3195535:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195537/fd/106 flags=0x0) failed: Permission denied
+[1704478069.916582] [blake09:3195535:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001a8030c291: Shared memory error
+[1704478069.916561] [blake09:3195536:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195537/fd/96 flags=0x0) failed: Permission denied
+[1704478069.916574] [blake09:3195536:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000180030c291: Shared memory error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.916570] [blake09:3195549:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195537/fd/216 flags=0x0) failed: Permission denied
+[1704478069.916584] [blake09:3195549:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000360030c291: Shared memory error
+[1704478069.916847] [blake09:3195519:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195542/fd/25 flags=0x0) failed: Permission denied
+[1704478069.916862] [blake09:3195519:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c296: Shared memory error
+[1704478069.916869] [blake09:3195531:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195547/fd/25 flags=0x0) failed: Permission denied
+[1704478069.916882] [blake09:3195531:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c29b: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.916900] [blake09:3195541:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195545/fd/25 flags=0x0) failed: Permission denied
+[1704478069.916913] [blake09:3195541:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c299: Shared memory error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.919689] [blake09:3195546:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195545/fd/25 flags=0x0) failed: Permission denied
+[1704478069.919715] [blake09:3195546:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c299: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.922238] [blake09:3195521:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195528/fd/48 flags=0x0) failed: Permission denied
+[1704478069.922259] [blake09:3195521:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000c0030c288: Shared memory error
+[1704478069.922335] [blake09:3195523:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195528/fd/78 flags=0x0) failed: Permission denied
+[1704478069.922362] [blake09:3195523:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000138030c288: Shared memory error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.923453] [blake09:3195524:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195528/fd/25 flags=0x0) failed: Permission denied
+[1704478069.923478] [blake09:3195524:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c288: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704478069.926530] [blake09:3195520:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195528/fd/25 flags=0x0) failed: Permission denied
+[1704478069.926548] [blake09:3195520:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c288: Shared memory error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:07:53 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+919.252711[ms]
+893.386869[ms]
+891.479351[ms]
+918.608064[ms]
+901.752748[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 8.8414 M/s
+Total bandwidth: 36214.2158 MB/s
+Fri Jan  5 11:08:00 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+842.186075[ms]
+860.517388[ms]
+862.060690[ms]
+839.245787[ms]
+844.016179[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 9.4167 M/s
+Total bandwidth: 38570.9695 MB/s
+Fri Jan  5 11:08:06 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 4096 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 4096
+805.334218[ms]
+811.144310[ms]
+828.996895[ms]
+795.233782[ms]
+817.747861[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 9.8566 M/s
+Total bandwidth: 40372.6054 MB/s
+Fri Jan  5 11:08:13 MST 2024
+#### proc 500000 16 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 4096
+[1704478109.198404] [blake09:3195804:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=112918876) failed: Cannot allocate memory
+[1704478109.198422] [blake09:3195804:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6bb015c: Shared memory error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.206019] [blake09:3195817:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195804/fd/266 flags=0x0) failed: Permission denied
+[1704478109.206050] [blake09:3195817:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000428030c39c: Shared memory error
+[1704478109.206021] [blake09:3195821:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195804/fd/166 flags=0x0) failed: Permission denied
+[1704478109.206050] [blake09:3195821:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000298030c39c: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.208679] [blake09:3195809:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=509) failed: Cannot allocate memory
+[1704478109.208693] [blake09:3195809:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d0030c3b0: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.209331] [blake09:3195803:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195809/fd/426 flags=0x0) failed: Permission denied
+[1704478109.209357] [blake09:3195803:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000006a8030c3a1: Shared memory error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.211048] [blake09:3195813:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195803/fd/494 flags=0x0) failed: Permission denied
+[1704478109.211071] [blake09:3195813:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000007b8030c39b: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.213106] [blake09:3195823:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195809/fd/25 flags=0x0) failed: Permission denied
+[1704478109.213130] [blake09:3195823:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a1: Shared memory error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.213884] [blake09:3195805:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195821/fd/240 flags=0x0) failed: Permission denied
+[1704478109.213902] [blake09:3195805:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003c0030c3ad: Shared memory error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.214211] [blake09:3195816:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195809/fd/25 flags=0x0) failed: Permission denied
+[1704478109.214234] [blake09:3195816:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a1: Shared memory error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.214492] [blake09:3195801:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195809/fd/25 flags=0x0) failed: Permission denied
+[1704478109.214513] [blake09:3195801:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a1: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.214646] [blake09:3195810:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195809/fd/25 flags=0x0) failed: Permission denied
+[1704478109.214664] [blake09:3195810:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a1: Shared memory error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.214897] [blake09:3195802:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195821/fd/25 flags=0x0) failed: Permission denied
+[1704478109.214915] [blake09:3195802:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3ad: Shared memory error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.215780] [blake09:3195814:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195802/fd/22 flags=0x0) failed: Permission denied
+[1704478109.215793] [blake09:3195814:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c39a: Shared memory error
+[1704478109.215791] [blake09:3195831:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195802/fd/22 flags=0x0) failed: Permission denied
+[1704478109.215803] [blake09:3195831:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c39a: Shared memory error
+[1704478109.215805] [blake09:3195819:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195802/fd/22 flags=0x0) failed: Permission denied
+[1704478109.215821] [blake09:3195819:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000058030c39a: Shared memory error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.216557] [blake09:3195826:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195831/fd/65 flags=0x0) failed: Permission denied
+[1704478109.216581] [blake09:3195826:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000104030c3b7: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.216924] [blake09:3195822:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=112918876) failed: Cannot allocate memory
+[1704478109.216937] [blake09:3195822:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6bb015c: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.217580] [blake09:3195827:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195813/fd/224 flags=0x0) failed: Permission denied
+[1704478109.217600] [blake09:3195827:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000380030c3a5: Shared memory error
+[1704478109.217571] [blake09:3195829:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195813/fd/254 flags=0x0) failed: Permission denied
+[1704478109.217596] [blake09:3195829:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003f8030c3a5: Shared memory error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.219926] [blake09:3195806:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195817/fd/25 flags=0x0) failed: Permission denied
+[1704478109.219948] [blake09:3195806:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a9: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.221639] [blake09:3195811:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195801/fd/460 flags=0x0) failed: Permission denied
+[1704478109.221663] [blake09:3195811:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000730030c399: Shared memory error
+[1704478109.221639] [blake09:3195832:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195801/fd/460 flags=0x0) failed: Permission denied
+[1704478109.221658] [blake09:3195832:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000730030c399: Shared memory error
+[1704478109.221690] [blake09:3195812:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195801/fd/470 flags=0x0) failed: Permission denied
+[1704478109.221712] [blake09:3195812:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000758030c399: Shared memory error
+[1704478109.221995] [blake09:3195818:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195816/fd/25 flags=0x0) failed: Permission denied
+[1704478109.222009] [blake09:3195818:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a8: Shared memory error
+[1704478109.221993] [blake09:3195820:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195816/fd/25 flags=0x0) failed: Permission denied
+[1704478109.222007] [blake09:3195820:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a8: Shared memory error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.221999] [blake09:3195824:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195816/fd/25 flags=0x0) failed: Permission denied
+[1704478109.222011] [blake09:3195824:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a8: Shared memory error
+[1704478109.221996] [blake09:3195830:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195816/fd/25 flags=0x0) failed: Permission denied
+[1704478109.222009] [blake09:3195830:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3a8: Shared memory error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.224229] [blake09:3195828:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195831/fd/25 flags=0x0) failed: Permission denied
+[1704478109.224245] [blake09:3195828:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3b7: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.224906] [blake09:3195808:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195828/fd/424 flags=0x0) failed: Permission denied
+[1704478109.224898] [blake09:3195815:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195828/fd/384 flags=0x0) failed: Permission denied
+[1704478109.224913] [blake09:3195815:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000600030c3b4: Shared memory error
+[1704478109.224923] [blake09:3195807:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195828/fd/164 flags=0x0) failed: Permission denied
+[1704478109.224936] [blake09:3195807:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000290030c3b4: Shared memory error
+[1704478109.224918] [blake09:3195808:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000006a0030c3b4: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+[1704478109.228123] [blake09:3195825:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3195831/fd/25 flags=0x0) failed: Permission denied
+[1704478109.228136] [blake09:3195825:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c3b7: Shared memory error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:08:35 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+878.130553[ms]
+864.436630[ms]
+861.932104[ms]
+833.707923[ms]
+877.078884[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 9.2700 M/s
+Total bandwidth: 37969.7851 MB/s
+Fri Jan  5 11:08:43 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 4096
+918.621753[ms]
+794.771627[ms]
+806.338852[ms]
+784.814152[ms]
+789.122218[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 9.7718 M/s
+Total bandwidth: 40025.3420 MB/s
+Fri Jan  5 11:08:50 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 4096 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 4096
+786.500922[ms]
+790.620908[ms]
+821.983142[ms]
+772.793930[ms]
+780.055800[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 4096
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 10.1222 M/s
+Total bandwidth: 41460.6184 MB/s
+Fri Jan  5 11:08:59 MST 2024
+#### proc 500000 16 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 16384
+1904.129666[ms]
+1880.625736[ms]
+1874.607158[ms]
+1874.912932[ms]
+1874.797052[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.2515 M/s
+Total bandwidth: 69656.3811 MB/s
+Fri Jan  5 11:09:13 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+2016.233753[ms]
+1986.045525[ms]
+2136.567776[ms]
+2125.752872[ms]
+2079.705546[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8671 M/s
+Total bandwidth: 63358.7189 MB/s
+Fri Jan  5 11:09:26 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+1877.518834[ms]
+1940.134626[ms]
+2047.818520[ms]
+2005.818696[ms]
+2006.978442[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.0496 M/s
+Total bandwidth: 66347.8526 MB/s
+Fri Jan  5 11:09:38 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 16384 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 16384
+2375.566301[ms]
+2634.930110[ms]
+2714.888915[ms]
+3024.782048[ms]
+2964.084624[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 2.9169 M/s
+Total bandwidth: 47789.8425 MB/s
+Fri Jan  5 11:09:56 MST 2024
+#### proc 500000 16 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 16384
+[1704478203.870000] [blake09:3196398:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=375) failed: Cannot allocate memory
+[1704478203.870022] [blake09:3196398:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030c5f4: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.871004] [blake09:3196400:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196398/fd/202 flags=0x0) failed: Permission denied
+[1704478203.871023] [blake09:3196400:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000328030c5ee: Shared memory error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.871645] [blake09:3196393:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196400/fd/296 flags=0x0) failed: Permission denied
+[1704478203.871663] [blake09:3196393:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000004a0030c5f0: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.872543] [blake09:3196391:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=113313019) failed: Cannot allocate memory
+[1704478203.872554] [blake09:3196391:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6c104fb: Shared memory error
+[1704478203.872558] [blake09:3196407:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196393/fd/25 flags=0x0) failed: Permission denied
+[1704478203.872571] [blake09:3196407:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e9: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.872834] [blake09:3196394:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196393/fd/25 flags=0x0) failed: Permission denied
+[1704478203.872850] [blake09:3196394:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e9: Shared memory error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.873131] [blake09:3196377:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/278 flags=0x0) failed: Permission denied
+[1704478203.873146] [blake09:3196377:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000458030c5e7: Shared memory error
+[1704478203.873151] [blake09:3196385:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/68 flags=0x0) failed: Permission denied
+[1704478203.873162] [blake09:3196385:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000110030c5e7: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.873428] [blake09:3196378:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.873441] [blake09:3196378:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.873288] [blake09:3196404:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196407/fd/160 flags=0x0) failed: Permission denied
+[1704478203.873305] [blake09:3196404:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000280030c5f7: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.873531] [blake09:3196396:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196394/fd/364 flags=0x0) failed: Permission denied
+[1704478203.873545] [blake09:3196396:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005b0030c5ea: Shared memory error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.873614] [blake09:3196402:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.873629] [blake09:3196402:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+[1704478203.873635] [blake09:3196401:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196393/fd/25 flags=0x0) failed: Permission denied
+[1704478203.873648] [blake09:3196401:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e9: Shared memory error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.874052] [blake09:3196390:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196398/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874067] [blake09:3196390:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5ee: Shared memory error
+[1704478203.874062] [blake09:3196389:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196393/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874075] [blake09:3196389:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e9: Shared memory error
+[1704478203.874123] [blake09:3196408:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196396/fd/158 flags=0x0) failed: Permission denied
+[1704478203.874136] [blake09:3196408:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000278030c5ec: Shared memory error
+[1704478203.874309] [blake09:3196379:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874323] [blake09:3196379:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.874318] [blake09:3196397:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874331] [blake09:3196397:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.874429] [blake09:3196383:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196393/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874450] [blake09:3196383:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e9: Shared memory error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.874529] [blake09:3196399:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874542] [blake09:3196399:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+[1704478203.874523] [blake09:3196405:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196391/fd/25 flags=0x0) failed: Permission denied
+[1704478203.874535] [blake09:3196405:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5e7: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.874902] [blake09:3196381:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196390/fd/106 flags=0x0) failed: Permission denied
+[1704478203.874916] [blake09:3196381:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001a8030c5e6: Shared memory error
+[1704478203.874889] [blake09:3196386:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196390/fd/196 flags=0x0) failed: Permission denied
+[1704478203.874909] [blake09:3196386:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000310030c5e6: Shared memory error
+[1704478203.874905] [blake09:3196387:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196390/fd/76 flags=0x0) failed: Permission denied
+[1704478203.874918] [blake09:3196387:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000130030c5e6: Shared memory error
+[1704478203.874913] [blake09:3196395:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196390/fd/86 flags=0x0) failed: Permission denied
+[1704478203.874926] [blake09:3196395:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000158030c5e6: Shared memory error
+[1704478203.874907] [blake09:3196406:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196390/fd/45 flags=0x0) failed: Permission denied
+[1704478203.874919] [blake09:3196406:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000000b4030c5e6: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.877882] [blake09:3196403:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196407/fd/25 flags=0x0) failed: Permission denied
+[1704478203.877910] [blake09:3196403:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c5f7: Shared memory error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.886086] [blake09:3196384:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196383/fd/172 flags=0x0) failed: Permission denied
+[1704478203.886103] [blake09:3196384:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000002b0030c5df: Shared memory error
+[1704478203.886088] [blake09:3196388:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196383/fd/172 flags=0x0) failed: Permission denied
+[1704478203.886103] [blake09:3196388:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000002b0030c5df: Shared memory error
+[1704478203.886109] [blake09:3196382:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196383/fd/172 flags=0x0) failed: Permission denied
+[1704478203.886125] [blake09:3196382:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000002b0030c5df: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.886654] [blake09:3196392:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196381/fd/248 flags=0x0) failed: Permission denied
+[1704478203.886674] [blake09:3196392:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e0030c5dd: Shared memory error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704478203.889146] [blake09:3196380:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196377/fd/250 flags=0x0) failed: Permission denied
+[1704478203.889178] [blake09:3196380:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e8030c5d9: Shared memory error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:10:07 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+2102.380889[ms]
+2040.359416[ms]
+2102.896640[ms]
+2079.881707[ms]
+2110.026741[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8333 M/s
+Total bandwidth: 62804.7618 MB/s
+Fri Jan  5 11:10:20 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+2033.653899[ms]
+1788.480236[ms]
+1900.898786[ms]
+1883.170879[ms]
+1881.585101[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.2162 M/s
+Total bandwidth: 69078.4702 MB/s
+Fri Jan  5 11:10:33 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 16384 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 16384
+1984.103837[ms]
+2106.508864[ms]
+1974.674863[ms]
+2278.071136[ms]
+1996.116897[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.8689 M/s
+Total bandwidth: 63388.3157 MB/s
+Fri Jan  5 11:10:48 MST 2024
+#### proc 500000 16 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 16384
+[1704478264.366579] [blake09:3196672:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=113508707) failed: Cannot allocate memory
+[1704478264.366598] [blake09:3196672:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6c40163: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.377244] [blake09:3196675:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/390 flags=0x0) failed: Permission denied
+[1704478264.377258] [blake09:3196675:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000618030c700: Shared memory error
+[1704478264.377249] [blake09:3196698:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/380 flags=0x0) failed: Permission denied
+[1704478264.377265] [blake09:3196698:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005f0030c700: Shared memory error
+[1704478264.377268] [blake09:3196687:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/440 flags=0x0) failed: Permission denied
+[1704478264.377281] [blake09:3196687:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000006e0030c700: Shared memory error
+[1704478264.377272] [blake09:3196690:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/250 flags=0x0) failed: Permission denied
+[1704478264.377286] [blake09:3196690:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e8030c700: Shared memory error
+[1704478264.377259] [blake09:3196696:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/400 flags=0x0) failed: Permission denied
+[1704478264.377271] [blake09:3196696:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000640030c700: Shared memory error
+[1704478264.377275] [blake09:3196697:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/160 flags=0x0) failed: Permission denied
+[1704478264.377287] [blake09:3196697:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000280030c700: Shared memory error
+[1704478264.377279] [blake09:3196680:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/450 flags=0x0) failed: Permission denied
+[1704478264.377292] [blake09:3196680:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000708030c700: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.379193] [blake09:3196673:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196672/fd/28 flags=0x0) failed: Permission denied
+[1704478264.379223] [blake09:3196673:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c700: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.380028] [blake09:3196684:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196675/fd/25 flags=0x0) failed: Permission denied
+[1704478264.380044] [blake09:3196684:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c703: Shared memory error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.380260] [blake09:3196681:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196675/fd/25 flags=0x0) failed: Permission denied
+[1704478264.380273] [blake09:3196681:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c703: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.384289] [blake09:3196667:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196687/fd/190 flags=0x0) failed: Permission denied
+[1704478264.384304] [blake09:3196667:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000002f8030c70f: Shared memory error
+[1704478264.384292] [blake09:3196670:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196687/fd/250 flags=0x0) failed: Permission denied
+[1704478264.384306] [blake09:3196670:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003e8030c70f: Shared memory error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.385027] [blake09:3196695:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.385041] [blake09:3196695:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+[1704478264.385042] [blake09:3196668:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/436 flags=0x0) failed: Permission denied
+[1704478264.385055] [blake09:3196668:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000006d0030c6fe: Shared memory error
+[1704478264.385044] [blake09:3196685:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/426 flags=0x0) failed: Permission denied
+[1704478264.385057] [blake09:3196685:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000006a8030c6fe: Shared memory error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.385638] [blake09:3196677:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.385659] [blake09:3196677:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+[1704478264.385634] [blake09:3196692:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.385658] [blake09:3196692:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.385927] [blake09:3196683:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196687/fd/25 flags=0x0) failed: Permission denied
+[1704478264.385950] [blake09:3196683:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c70f: Shared memory error
+[1704478264.386089] [blake09:3196671:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.386119] [blake09:3196671:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+[1704478264.386092] [blake09:3196678:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.386120] [blake09:3196678:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+[1704478264.386122] [blake09:3196676:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.386140] [blake09:3196676:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.386519] [blake09:3196674:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.386538] [blake09:3196674:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+[1704478264.386535] [blake09:3196669:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196670/fd/26 flags=0x0) failed: Permission denied
+[1704478264.386553] [blake09:3196669:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c6fe: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.387321] [blake09:3196682:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196687/fd/25 flags=0x0) failed: Permission denied
+[1704478264.387340] [blake09:3196682:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c70f: Shared memory error
+[1704478264.387317] [blake09:3196688:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196687/fd/25 flags=0x0) failed: Permission denied
+[1704478264.387338] [blake09:3196688:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c70f: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.387714] [blake09:3196694:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196680/fd/25 flags=0x0) failed: Permission denied
+[1704478264.387733] [blake09:3196694:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c708: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.388213] [blake09:3196689:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196669/fd/24 flags=0x0) failed: Permission denied
+[1704478264.388228] [blake09:3196689:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000060030c6fd: Shared memory error
+[1704478264.388224] [blake09:3196679:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196669/fd/24 flags=0x0) failed: Permission denied
+[1704478264.388238] [blake09:3196679:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000060030c6fd: Shared memory error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+[1704478264.388577] [blake09:3196686:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196680/fd/25 flags=0x0) failed: Permission denied
+[1704478264.388591] [blake09:3196686:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c708: Shared memory error
+[1704478264.388582] [blake09:3196691:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196680/fd/25 flags=0x0) failed: Permission denied
+[1704478264.388595] [blake09:3196691:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c708: Shared memory error
+[1704478264.388576] [blake09:3196693:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3196680/fd/25 flags=0x0) failed: Permission denied
+[1704478264.388590] [blake09:3196693:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c708: Shared memory error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:11:11 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+2016.354549[ms]
+1971.361832[ms]
+2213.027264[ms]
+2145.015486[ms]
+2227.199017[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.7835 M/s
+Total bandwidth: 61988.5120 MB/s
+Fri Jan  5 11:11:26 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 16384
+2080.280900[ms]
+2047.144171[ms]
+2044.163499[ms]
+2122.368300[ms]
+2235.900963[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 3.7990 M/s
+Total bandwidth: 62242.2404 MB/s
+Fri Jan  5 11:11:41 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 16384 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 16384
+1707.555470[ms]
+1991.935116[ms]
+2033.919371[ms]
+1942.962112[ms]
+2033.035527[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 16384
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 4.1200 M/s
+Total bandwidth: 67501.7437 MB/s
+Fri Jan  5 11:11:56 MST 2024
+#### proc 500000 16 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 65536
+5777.141984[ms]
+5780.150480[ms]
+5773.747289[ms]
+5767.748604[ms]
+5770.900801[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.3856 M/s
+Total bandwidth: 90808.3131 MB/s
+Fri Jan  5 11:12:34 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+6384.904935[ms]
+8562.743759[ms]
+8894.460508[ms]
+8889.950259[ms]
+8891.890682[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.9610 M/s
+Total bandwidth: 62983.1566 MB/s
+Fri Jan  5 11:13:22 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=16 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+5547.757446[ms]
+5480.285810[ms]
+5674.648594[ms]
+5675.699764[ms]
+5588.674142[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.4303 M/s
+Total bandwidth: 93739.1071 MB/s
+Fri Jan  5 11:13:57 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 65536 0 48 16
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=16 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 65536
+6318.158252[ms]
+8521.628275[ms]
+8737.894421[ms]
+8795.770259[ms]
+8750.329789[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.9727 M/s
+Total bandwidth: 63749.1911 MB/s
+Fri Jan  5 11:14:48 MST 2024
+#### proc 500000 16 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 65536
+[1704478495.786737] [blake09:3197257:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=343) failed: Cannot allocate memory
+[1704478495.786758] [blake09:3197257:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030c95f: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.786991] [blake09:3197261:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=351) failed: Cannot allocate memory
+[1704478495.787007] [blake09:3197261:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030c95f: Shared memory error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.791590] [blake09:3197264:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=357) failed: Cannot allocate memory
+[1704478495.791603] [blake09:3197264:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000420030c95f: Shared memory error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.801187] [blake09:3197258:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.801202] [blake09:3197258:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.802274] [blake09:3197270:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=113902923) failed: Cannot allocate memory
+[1704478495.802284] [blake09:3197270:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6ca054b: Shared memory error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.802638] [blake09:3197278:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=385) failed: Cannot allocate memory
+[1704478495.802650] [blake09:3197278:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000448030c95f: Shared memory error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.803228] [blake09:3197283:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/382 flags=0x0) failed: Permission denied
+[1704478495.803241] [blake09:3197283:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000005f8030c95e: Shared memory error
+[1704478495.803340] [blake09:3197259:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/25 flags=0x0) failed: Permission denied
+[1704478495.803352] [blake09:3197259:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95e: Shared memory error
+[1704478495.803372] [blake09:3197265:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197270/fd/25 flags=0x0) failed: Permission denied
+[1704478495.803394] [blake09:3197265:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c956: Shared memory error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.803615] [blake09:3197282:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/25 flags=0x0) failed: Permission denied
+[1704478495.803629] [blake09:3197282:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95e: Shared memory error
+[1704478495.803743] [blake09:3197274:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/25 flags=0x0) failed: Permission denied
+[1704478495.803756] [blake09:3197274:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95e: Shared memory error
+[1704478495.803825] [blake09:3197255:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/25 flags=0x0) failed: Permission denied
+[1704478495.803839] [blake09:3197255:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95e: Shared memory error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.803865] [blake09:3197276:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.803878] [blake09:3197276:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.803992] [blake09:3197275:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197278/fd/25 flags=0x0) failed: Permission denied
+[1704478495.804007] [blake09:3197275:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95e: Shared memory error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.804305] [blake09:3197262:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.804319] [blake09:3197262:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+[1704478495.804433] [blake09:3197268:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.804447] [blake09:3197268:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.804581] [blake09:3197269:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197276/fd/228 flags=0x0) failed: Permission denied
+[1704478495.804607] [blake09:3197269:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000390030c95c: Shared memory error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.804634] [blake09:3197266:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.804648] [blake09:3197266:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+[1704478495.804916] [blake09:3197260:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/296 flags=0x0) failed: Permission denied
+[1704478495.804929] [blake09:3197260:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000004a0030c947: Shared memory error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.804911] [blake09:3197280:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/266 flags=0x0) failed: Permission denied
+[1704478495.804924] [blake09:3197280:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000428030c947: Shared memory error
+[1704478495.804908] [blake09:3197281:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/316 flags=0x0) failed: Permission denied
+[1704478495.804922] [blake09:3197281:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000004f0030c947: Shared memory error
+[1704478495.804925] [blake09:3197273:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/336 flags=0x0) failed: Permission denied
+[1704478495.804940] [blake09:3197273:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000540030c947: Shared memory error
+[1704478495.804937] [blake09:3197277:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/316 flags=0x0) failed: Permission denied
+[1704478495.804950] [blake09:3197277:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000004f0030c947: Shared memory error
+[1704478495.805240] [blake09:3197272:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/26 flags=0x0) failed: Permission denied
+[1704478495.805257] [blake09:3197272:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c947: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.805492] [blake09:3197267:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197270/fd/25 flags=0x0) failed: Permission denied
+[1704478495.805510] [blake09:3197267:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c956: Shared memory error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.805512] [blake09:3197252:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197257/fd/28 flags=0x0) failed: Permission denied
+[1704478495.805524] [blake09:3197252:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000070030c949: Shared memory error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.807429] [blake09:3197253:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/26 flags=0x0) failed: Permission denied
+[1704478495.807444] [blake09:3197253:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c947: Shared memory error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.807976] [blake09:3197254:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/26 flags=0x0) failed: Permission denied
+[1704478495.808004] [blake09:3197254:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c947: Shared memory error
+[1704478495.808093] [blake09:3197263:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197282/fd/25 flags=0x0) failed: Permission denied
+[1704478495.808110] [blake09:3197263:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c962: Shared memory error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+[1704478495.808301] [blake09:3197256:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197276/fd/25 flags=0x0) failed: Permission denied
+[1704478495.808329] [blake09:3197256:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95c: Shared memory error
+[1704478495.808343] [blake09:3197279:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197255/fd/26 flags=0x0) failed: Permission denied
+[1704478495.808364] [blake09:3197279:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000068030c947: Shared memory error
+[1704478495.808503] [blake09:3197271:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197276/fd/25 flags=0x0) failed: Permission denied
+[1704478495.808527] [blake09:3197271:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030c95c: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:14:59 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+6912.512869[ms]
+8943.111230[ms]
+8945.794990[ms]
+8959.093916[ms]
+8946.786484[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.9367 M/s
+Total bandwidth: 61385.4728 MB/s
+Fri Jan  5 11:15:49 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=32 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+7006.434213[ms]
+7200.821703[ms]
+7935.944777[ms]
+7925.188867[ms]
+8715.468535[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.0314 M/s
+Total bandwidth: 67595.3322 MB/s
+Fri Jan  5 11:16:35 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 65536 0 48 32
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=32 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 65536
+6404.747069[ms]
+7649.858539[ms]
+7339.789364[ms]
+7708.786936[ms]
+8072.092616[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.0761 M/s
+Total bandwidth: 70520.1994 MB/s
+Fri Jan  5 11:17:20 MST 2024
+#### proc 500000 16 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pth/bin/mpiexec -n 32  ./ucx_pth.out 0 16 1 500000 32 65536
+[1704478656.524536] [blake09:3197559:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=114098518) failed: Cannot allocate memory
+[1704478656.524549] [blake09:3197559:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6cd0156: Shared memory error
+[1704478656.524504] [blake09:3197574:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=549) failed: Cannot allocate memory
+[1704478656.524524] [blake09:3197574:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d0030ca81: Shared memory error
+Abort(15) on node 13: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 28: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.525488] [blake09:3197561:0]        mm_posix.c:318  UCX  ERROR   shared memory mmap(addr=(nil), length=12288, flags=, fd=523) failed: Cannot allocate memory
+[1704478656.525500] [blake09:3197561:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000001d0030ca81: Shared memory error
+Abort(15) on node 15: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.529498] [blake09:3197577:0]         mm_sysv.c:57   UCX  ERROR   shmat(shmid=114098518) failed: Cannot allocate memory
+[1704478656.529511] [blake09:3197577:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0x6cd0156: Shared memory error
+Abort(15) on node 31: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.530404] [blake09:3197568:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530417] [blake09:3197568:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.530398] [blake09:3197571:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530413] [blake09:3197571:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.530400] [blake09:3197572:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530414] [blake09:3197572:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.530424] [blake09:3197569:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530436] [blake09:3197569:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.530434] [blake09:3197560:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530449] [blake09:3197560:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.530488] [blake09:3197547:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.530503] [blake09:3197547:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 25: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 22: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 26: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 23: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 1: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 14: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.531145] [blake09:3197558:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197571/fd/450 flags=0x0) failed: Permission denied
+[1704478656.531160] [blake09:3197558:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000708030ca83: Shared memory error
+[1704478656.531243] [blake09:3197549:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197568/fd/164 flags=0x0) failed: Permission denied
+[1704478656.531256] [blake09:3197549:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000290030ca80: Shared memory error
+[1704478656.531155] [blake09:3197554:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.531170] [blake09:3197554:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 8: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 3: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 12: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.532229] [blake09:3197576:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.532241] [blake09:3197576:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 30: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.532412] [blake09:3197556:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197549/fd/406 flags=0x0) failed: Permission denied
+[1704478656.532443] [blake09:3197556:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000658030ca6d: Shared memory error
+Abort(15) on node 10: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.533273] [blake09:3197575:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.533289] [blake09:3197575:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 29: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.533888] [blake09:3197573:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.533902] [blake09:3197573:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 27: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.534567] [blake09:3197557:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.534582] [blake09:3197557:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.534705] [blake09:3197563:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.534720] [blake09:3197563:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 11: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 17: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.535177] [blake09:3197567:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535191] [blake09:3197567:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.535292] [blake09:3197555:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535307] [blake09:3197555:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 21: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 9: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.535535] [blake09:3197562:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197556/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535560] [blake09:3197562:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca74: Shared memory error
+[1704478656.535640] [blake09:3197564:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535654] [blake09:3197564:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.535533] [blake09:3197565:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197556/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535560] [blake09:3197565:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca74: Shared memory error
+[1704478656.535554] [blake09:3197566:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535567] [blake09:3197566:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.535530] [blake09:3197570:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197556/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535560] [blake09:3197570:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca74: Shared memory error
+[1704478656.535744] [blake09:3197550:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535758] [blake09:3197550:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+[1704478656.535670] [blake09:3197553:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535685] [blake09:3197553:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 19: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 20: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 16: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 24: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.535836] [blake09:3197552:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197559/fd/25 flags=0x0) failed: Permission denied
+[1704478656.535851] [blake09:3197552:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca77: Shared memory error
+Abort(15) on node 7: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 18: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 4: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 6: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.538101] [blake09:3197548:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197568/fd/25 flags=0x0) failed: Permission denied
+[1704478656.538128] [blake09:3197548:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca80: Shared memory error
+Abort(15) on node 2: Fatal error in internal_Init_thread: Other MPI error
+[1704478656.542460] [blake09:3197551:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197554/fd/236 flags=0x0) failed: Permission denied
+[1704478656.542485] [blake09:3197551:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc000003b0030ca72: Shared memory error
+[1704478656.542573] [blake09:3197546:0]        mm_posix.c:219  UCX  ERROR   open(file_name=/proc/3197556/fd/25 flags=0x0) failed: Permission denied
+[1704478656.542594] [blake09:3197546:0]           mm_ep.c:171  UCX  ERROR   mm ep failed to connect to remote FIFO id 0xc00000064030ca74: Shared memory error
+Abort(15) on node 5: Fatal error in internal_Init_thread: Other MPI error
+Abort(15) on node 0: Fatal error in internal_Init_thread: Other MPI error
+Fri Jan  5 11:17:43 MST 2024
+#### pth_vciopt_Ncomm 500000 16 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=0 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+6403.723019[ms]
+8851.070031[ms]
+8935.533265[ms]
+8940.639587[ms]
+8933.621413[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.9510 M/s
+Total bandwidth: 62323.3922 MB/s
+Fri Jan  5 11:18:34 MST 2024
+#### pth_vciopt_Ncomm_nolock 500000 16 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 MPIR_CVAR_CH4_NUM_VCIS=48 NOLOCK=1 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_pthvciopt/bin/mpiexec -n 2  ./ucx_pthvciopt.out 1 16 48 500000 32 65536
+8893.167613[ms]
+8892.052039[ms]
+8895.465513[ms]
+8889.791324[ms]
+8895.575449[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 0.8996 M/s
+Total bandwidth: 58957.5116 MB/s
+Fri Jan  5 11:19:27 MST 2024
+#### abt_vci_Ncomm_Nes 500000 16 32 65536 0 48 48
+COMM_TYPE=0 NUM_REPEATS=5 ABT_MEM_LP_ALLOC=mmap_rp ABT_NUM_XSTREAMS=16 MPIR_CVAR_CH4_NUM_VCIS=48 timeout -s 9 600 /home/dkruse/projects/blake.mpiult.mpich/mybench/../install_ucx_abt/bin/mpiexec -n 2  ./ucx_abt.out 1 16 48 500000 32 65536
+6676.282204[ms]
+6645.587493[ms]
+6828.094275[ms]
+7044.485283[ms]
+7033.993280[ms]
+Operation Type: PT2PT
+Number of messages: 500000
+Message size: 65536
+Window size: 32
+Number of entities: 16
+Number of communicators: 48
+Number of repetitions: 5
+Total message rates: 1.1687 M/s
+Total bandwidth: 76591.5005 MB/s
+completed!
+End :: Blake  trial 4816
+2024-01-05_11:20:11
