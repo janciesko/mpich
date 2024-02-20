@@ -97,7 +97,7 @@ void MPL_thread_create(MPL_thread_func_t func, void *data, MPL_thread_id_t * idp
         }                                                                     \
         *(idp_) = id_tmp_;                                                    \
     } while (0)
-#define MPL_thread_join(id_)
+#define MPL_thread_join(id_) qthread_readFE(id_, NULL)
 #define MPL_thread_same(idp1_, idp2_, same_)                                  \
     do {                                                                      \
         /*                                                                    \

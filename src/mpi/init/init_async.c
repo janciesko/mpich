@@ -306,7 +306,11 @@ int MPIR_Stop_progress_thread_impl(MPIR_Stream * stream_ptr)
     }
 
     MPL_atomic_store_int(&p->state, MPIR_ASYNC_STATE_DONE);
-    MPID_Thread_join(p->thread_id);
+    #if (THREAD_PACKAGE_NAME == THREAD_PACKAGE_QTHREADS)
+    MPID_Thread_join(&p->thread_id);
+    #else
+    MPL_Thread_join(p->thread_id);
+    #endif
     MPL_atomic_store_int(&p->state, MPIR_ASYNC_STATE_UNSET);
 
   fn_exit:
