@@ -34,7 +34,7 @@ if [ x"$DEVICE" = x ]; then
     echo ""
     echo "Example:"
     echo "    sh make.sh opt pth ucx 32 /home/user/install_opt_pth_ucx"
-    echo "    OPT_NUM=3 sh make.sh opt pthabt ucx 32 /home/user/install_opt_pth_ucx"
+    echo "    OPT_NUM=3 sh make.sh opt abt ucx 32 /home/user/install_opt_pth_ucx"
     exit 1
 fi
 
@@ -43,7 +43,7 @@ if [ x"$NJOBS" = x ]; then
 fi
 
 if [ x"$PREFIX" = x ]; then
-    PREFIX="$(pwd)/install"
+    PREFIX="$(pwd)/install_${DEVICE}_${THREAD}"
 fi
 
 if  [ ! -d "argobots" ]; then
@@ -87,9 +87,9 @@ if  [ ! -f "argobots/install/lib/libabt.so" ]; then
     date
     cd argobots
     sh autogen.sh
-    ./configure --prefix=$(pwd)/install-fast --enable-perf-opt
+    ./configure --prefix=$(pwd)/install-fast --enable-perf-opt #--enable-affinity
     make -j $NJOBS install
-    ./configure --prefix=$(pwd)/install --enable-fast=O0 --enable-debug=yes --enable-tls-model=initial-exec
+    ./configure --prefix=$(pwd)/install --enable-fast=O0 --enable-debug=yes --enable-tls-model=initial-exec #--enable-affinity
     make -j $NJOBS install
     cd ../
 fi
@@ -99,9 +99,9 @@ if  [ ! -f "argobots_unopt/install/lib/libabt.so" ]; then
     date
     cd argobots_unopt
     sh autogen.sh
-    ./configure --prefix=$(pwd)/install-fast --enable-perf-opt
+    ./configure --prefix=$(pwd)/install-fast --enable-perf-opt #--enable-affinity
     make -j $NJOBS install
-    ./configure --prefix=$(pwd)/install --enable-fast=O0 --enable-debug=yes --enable-tls-model=initial-exec
+    ./configure --prefix=$(pwd)/install --enable-fast=O0 --enable-debug=yes --enable-tls-model=initial-exec #--enable-affinity
     make -j $NJOBS install
     cd ../
 fi
@@ -144,14 +144,13 @@ if [ x"$OPT_NUM" != x"8" ]; then
     fastabtpath="$(pwd)/argobots/install-fast"
     abtpath="$(pwd)/argobots/install"
 fi
-if [ x"$OPT_NUM" != x"10" ]; then
-    optcflags="${optcflags} -DVCIEXP_PER_STATE_PROGRESS_COUNTER"
-fi
-# dkruse, use this
 if [ x"$OPT_NUM" = x"9" ]; then
     optcflags=""
     fastabtpath="$(pwd)/argobots_unopt/install-fast"
     abtpath="$(pwd)/argobots_unopt/install"
+fi
+if [ x"$OPT_NUM" != x"10" ]; then
+    optcflags="${optcflags} -DVCIEXP_PER_STATE_PROGRESS_COUNTER"
 fi
 
 if [ x"$THREAD" = x"pthvci" ]; then

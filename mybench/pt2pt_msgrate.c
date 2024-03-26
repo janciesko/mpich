@@ -157,8 +157,9 @@ void thread_func(void *arg)
         double end_time = MPI_Wtime();
         if (i >= 1) {
             elapsed_time += end_time - start_time;
-            if (tid == 0 && g_comm_rank == 0)
-                printf("%f[ms]\n", (end_time - start_time) * 1.0e3);
+            if (tid == 0 && g_comm_rank == 0){
+             //   printf("%f[ms]\n", (end_time - start_time) * 1.0e3);
+            }
         }
     }
     if (comm_type == COMM_TYPE_PT2PT) {
@@ -210,7 +211,7 @@ void main_thread_func(void *arg)
         assert(g_comm_size == g_num_entities * 2);
     } else {
         /* Multithreaded. */
-        printf("g_comm_size = %d\n", g_comm_size);
+        //printf("g_comm_size = %d\n", g_comm_size);
         assert(g_comm_size == 2);
     }
 
@@ -246,27 +247,46 @@ void main_thread_func(void *arg)
         thread_join(&thread_args[i].thread);
     }
 
-    /* Calculate message rate with multiple threads */
     if (g_comm_rank == 0) {
-        if (g_comm_type == COMM_TYPE_PT2PT) {
-            printf("Operation Type: PT2PT\n");
-        } else if (g_comm_type == COMM_TYPE_PUT) {
-            printf("Operation Type: PUT\n");
-        } else if (g_comm_type == COMM_TYPE_GET) {
-            printf("Operation Type: GET\n");
+        if(g_benchmark_type == 0){
+            printf("mpi-everywhere,");
         }
-        printf("Number of messages: %lld\n", (long long) g_num_messages);
-        printf("Message size: %lld\n", (long long) g_message_size);
-        printf("Window size: %lld\n", (long long) g_window_size);
-        printf("Number of entities: %d\n", g_num_entities);
-        printf("Number of communicators: %d\n", g_num_comms);
-        printf("Number of repetitions: %d\n", g_num_repeats);
+        else {
+            printf("mpi+");
+            #if defined(USE_PTHREADS)
+            if(g_nolock_mode)
+            printf("pthreads-nolock,");
+            else
+            printf("pthreads,");
+            #elif defined (USE_ARGOBOTS)
+            if(g_nolock_mode)
+            printf("argobots-nolock,");
+            else
+            printf("argobots,");
+            #else
+            printf("unknown,");
+            #endif
+        }
+
+        if (g_comm_type == COMM_TYPE_PT2PT) {
+            printf("p2p,");
+        } else if (g_comm_type == COMM_TYPE_PUT) {
+            printf("put,");
+        } else if (g_comm_type == COMM_TYPE_GET) {
+            printf("get,");
+        }
+        printf(/*"Number of messages: */"%lld,", (long long) g_num_messages);
+        printf(/*"Message size: */"%lld,", (long long) g_message_size);
+        printf(/*"Window size:*/ "%lld,", (long long) g_window_size);
+        printf(/*"Number of entities:*/"%d,", g_num_entities);
+        printf(/*"Number of communicators: */"%d,", g_num_comms);
+        printf(/*"Number of repetitions: */"%d,", g_num_repeats);
         const size_t win_posts = g_num_messages / g_window_size + 1;
         double total_num_messages = ((double) win_posts) * g_window_size * g_num_entities;
-        printf("Total message rates: %.4f M/s\n",
+        printf(/*"Total message rates: */"%.4f,",
                total_num_messages / thread_args[0].elapsed_time * 1.0e-6);
         double total_send_bytes = total_num_messages * g_message_size;
-        printf("Total bandwidth: %.4f MB/s\n",
+        printf(/*"Total bandwidth:*/ "%.4f\n",
                total_send_bytes / thread_args[0].elapsed_time * 1.0e-6);
     }
 
@@ -311,6 +331,7 @@ int main(int argc, char *argv[])
     if (getenv("COMM_TYPE")) {
         g_comm_type = atoi(getenv("COMM_TYPE"));
     }
+    
     if (getenv("PROGMASK")) {
         int user_progmask = atoi(getenv("PROGMASK"));
 #if defined(USE_PTHREADS) || defined(USE_ARGOBOTS)
